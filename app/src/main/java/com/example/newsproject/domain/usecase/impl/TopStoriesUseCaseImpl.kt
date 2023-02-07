@@ -1,18 +1,18 @@
 package com.example.newsproject.domain.usecase.impl
 
-import android.content.res.Resources.NotFoundException
 import com.example.newsproject.datasource.remote.repository.INewsRemoteRepository
 import com.example.newsproject.datasource.remote.response.ArticleItemResponse
 import com.example.newsproject.domain.mapper.ISingleMapper
 import com.example.newsproject.domain.usecase.ITopStoriesUseCase
 import com.example.newsproject.model.NewsModel
+import com.example.newsproject.util.ResultEvent
 
 class TopStoriesUseCaseImpl constructor(
     private val remoteRepo: INewsRemoteRepository,
     private val newsMapper: ISingleMapper<ArticleItemResponse, NewsModel>
 ) : ITopStoriesUseCase {
 
-    override suspend fun invoke(): Result<List<NewsModel>> {
+    override suspend fun invoke(): ResultEvent<List<NewsModel>> {
         return try {
             val response = remoteRepo.getTopStories()
             val result = response.body?.articles
@@ -20,10 +20,10 @@ class TopStoriesUseCaseImpl constructor(
 
             if (statue == "ok" && result != null) {
                 val newsModel = result.map { newsMapper.invoke(it) }
-                Result.success(newsModel)
-            } else Result.failure(NotFoundException("Articles not found"))
+                ResultEvent.Success(newsModel)
+            } else ResultEvent.Error("Articles not found")
         } catch (t: Throwable) {
-            Result.failure(t)
+            ResultEvent.Error(t.message)
         }
     }
 }
