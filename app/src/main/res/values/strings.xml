@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NewsProject</string>
+    <string name="bbc">BBC</string>
+    <string name="text">Based on our experience, we know which Shore hardness is necessary to prevent damage to the vehicle when it is lifted. On customer request, however, it is also possible to adapt the rubber hardness to specific requirements.</string>
+    <string name="april_16_2023">April 16, 2023</string>
+    <string name="breaking_news_title">Breaking News</string>
+    <string name="top_stories">Top Stories</string>
+    <string name="fox_news">Fox News</string>
+</resources>
