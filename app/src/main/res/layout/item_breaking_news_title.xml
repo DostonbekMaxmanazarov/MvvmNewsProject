@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="start"
+    android:padding="16dp"
+    android:gravity="start"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDate"
         android:layout_width="wrap_content"
-        android:textSize="11sp"
-        android:textStyle="bold"
-        android:textColor="#B1B1B1"
+        android:layout_height="wrap_content"
         android:text="@string/april_16_2023"
-        android:layout_height="wrap_content"/>
+        android:textColor="#B1B1B1"
+        android:textSize="11sp"
+        android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/black"
         android:text="@string/breaking_news_title"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

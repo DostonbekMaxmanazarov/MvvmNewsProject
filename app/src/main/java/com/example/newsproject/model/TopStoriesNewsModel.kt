@@ -1,6 +1,6 @@
 package com.example.newsproject.model
 
-data class NewsModel(
+data class TopStoriesNewsModel(
     val name: String? = null,
     val title: String? = null,
     val imageUrl: String? = null,

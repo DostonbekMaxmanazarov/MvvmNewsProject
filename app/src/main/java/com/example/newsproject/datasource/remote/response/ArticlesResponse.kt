@@ -2,16 +2,8 @@ package com.example.newsproject.datasource.remote.response
 
 import kotlinx.serialization.Serializable
 
-class Response<T>(
-    val body: T?,
-    val status: String?,
-    val totalResults: Int?
-)
-
-typealias ArticlesResponse = Response<ArticlesResultData>
-
 @Serializable
-data class ArticlesResultData(
+data class ArticlesResponse(
     val articles: List<ArticleItemResponse>? = null
 )
 

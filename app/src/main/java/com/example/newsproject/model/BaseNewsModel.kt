@@ -1,3 +1,3 @@
 package com.example.newsproject.model
 
-abstract class BaseNewsModel
+open class BaseNewsModel
