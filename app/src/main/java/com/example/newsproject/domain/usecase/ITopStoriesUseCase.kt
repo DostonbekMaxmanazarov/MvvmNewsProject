@@ -4,5 +4,5 @@ import com.example.newsproject.model.TopStoriesNewsModel
 import com.example.newsproject.util.ResultEvent
 
 interface ITopStoriesUseCase {
-    suspend operator fun invoke(): ResultEvent<List<TopStoriesNewsModel>>
+    suspend operator fun invoke(): ResultEvent<TopStoriesNewsModel>
 }

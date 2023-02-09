@@ -4,10 +4,9 @@ import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsproject.databinding.ItemBreakingNewsBinding
 import com.example.newsproject.databinding.ItemBreakingNewsTitleBinding
-import com.example.newsproject.databinding.ItemChildNewsBinding
-import com.example.newsproject.databinding.ItemNewsTopStoriesBinding
+import com.example.newsproject.databinding.ItemChildBreakingNewsBinding
+import com.example.newsproject.databinding.ItemChildTopNewsBinding
 import com.example.newsproject.databinding.ItemNewsTopStoriesTitleBinding
 import com.example.newsproject.model.BreakingNewsModel
 import com.example.newsproject.model.BreakingNewsTitleModel
@@ -23,12 +22,12 @@ sealed class BaseVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    class BreakingNewsVH(binding: ItemChildNewsBinding, mContext: Context) : BaseVH(binding.root) {
-        private var data = BreakingNewsModel(emptyList())
-        private var adapter: NewsChildAdapter? = null
+    class BreakingNewsVH(binding: ItemChildBreakingNewsBinding, mContext: Context) :
+        BaseVH(binding.root) {
+        private var adapter: BreakingNewsChildAdapter? = null
 
         init {
-            adapter = NewsChildAdapter()
+            adapter = BreakingNewsChildAdapter()
             binding.rv.layoutManager =
                 LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
             binding.rv.setHasFixedSize(true)
@@ -37,14 +36,24 @@ sealed class BaseVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         fun setData(breakingNewsModel: BreakingNewsModel) {
-            adapter?.submitList(breakingNewsModel.news.toMutableList())
+            adapter?.submitList(breakingNewsModel.breakingNews.toMutableList())
         }
     }
 
-    class NewsTopStoriesVH(private val binding: ItemNewsTopStoriesBinding) : BaseVH(binding.root) {
-        fun bind(data: TopStoriesNewsModel) {
-            binding.tvTitle.text = data.name
-            binding.tvDescription.text = data.content
+    class NewsTopStoriesVH(binding: ItemChildTopNewsBinding, mContext: Context) :
+        BaseVH(binding.root) {
+        private var adapter: TopNewsChildAdapter? = null
+
+        init {
+            adapter = TopNewsChildAdapter()
+            binding.rv.layoutManager =
+                LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+            binding.rv.setHasFixedSize(true)
+            binding.rv.adapter = adapter
+        }
+
+        fun setData(breakingNewsModel: TopStoriesNewsModel) {
+            adapter?.submitList(breakingNewsModel.topNews.toMutableList())
         }
     }
 

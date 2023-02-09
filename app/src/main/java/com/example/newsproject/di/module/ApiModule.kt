@@ -1,4 +1,4 @@
-package com.example.newsproject.di
+package com.example.newsproject.di.module
 
 import com.example.newsproject.datasource.remote.api.NewsApi
 import dagger.Module

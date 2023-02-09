@@ -5,17 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsproject.databinding.ItemBreakingNewsBinding
+import com.example.newsproject.databinding.ItemNewsTopStoriesBinding
 import com.example.newsproject.model.BreakingNewsItemModel
+import com.example.newsproject.model.TopStoriesNewsItemModel
+import com.example.newsproject.model.TopStoriesNewsTitleModel
 
 @SuppressLint("NotifyDataSetChanged")
-class NewsChildAdapter : RecyclerView.Adapter<NewsChildAdapter.VH>() {
+class TopNewsChildAdapter : RecyclerView.Adapter<TopNewsChildAdapter.VH>() {
 
-    private val mList = mutableListOf<BreakingNewsItemModel>()
-    private lateinit var binding: ItemBreakingNewsBinding
+    private val mList = mutableListOf<TopStoriesNewsItemModel>()
+    private lateinit var binding: ItemNewsTopStoriesBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val view = LayoutInflater.from(parent.context)
-        binding = ItemBreakingNewsBinding.inflate(view, parent, false)
+        binding = ItemNewsTopStoriesBinding.inflate(view, parent, false)
         return VH(binding)
     }
 
@@ -23,17 +26,17 @@ class NewsChildAdapter : RecyclerView.Adapter<NewsChildAdapter.VH>() {
 
     override fun getItemCount() = mList.size
 
-    fun submitList(data: MutableList<BreakingNewsItemModel>) {
+    fun submitList(data: MutableList<TopStoriesNewsItemModel>) {
         mList.clear()
         mList.addAll(data)
         notifyDataSetChanged()
     }
 
     class VH(
-        private val binding: ItemBreakingNewsBinding
+        private val binding: ItemNewsTopStoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: BreakingNewsItemModel) {
+        fun bind(data: TopStoriesNewsItemModel) {
             binding.tvTitle.text = data.name
             binding.tvDescription.text = data.content
         }

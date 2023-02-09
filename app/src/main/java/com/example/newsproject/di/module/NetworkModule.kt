@@ -1,4 +1,4 @@
-package com.example.newsproject.di
+package com.example.newsproject.di.module
 
 import com.example.newsproject.util.Constants.BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
