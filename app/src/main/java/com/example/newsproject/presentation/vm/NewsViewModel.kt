@@ -7,7 +7,7 @@ import com.example.newsproject.domain.usecase.ITopStoriesUseCase
 import com.example.newsproject.model.BaseNewsModel
 import com.example.newsproject.model.BreakingNewsTitleModel
 import com.example.newsproject.model.TopStoriesNewsTitleModel
-import com.example.newsproject.util.ResultEvent
+import com.example.newsproject.datasource.utils.ResultEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,6 +31,7 @@ class NewsViewModel @Inject constructor(
 
     private fun getTopStories() {
         viewModelScope.launch {
+            _newsStateFlow.emit(ResultEvent.Loading)
             _newsStateFlow.emit(
                 ResultEvent.Success(
                     BreakingNewsTitleModel(

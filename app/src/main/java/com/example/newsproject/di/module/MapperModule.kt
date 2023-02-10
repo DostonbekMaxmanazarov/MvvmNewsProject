@@ -1,9 +1,12 @@
 package com.example.newsproject.di.module
 
+import com.example.newsproject.datasource.local.entity.BreakingNewsEntity
 import com.example.newsproject.datasource.remote.response.ArticleItemResponse
+import com.example.newsproject.di.qualifier.BreakingNewsLocalModuleMapper
 import com.example.newsproject.di.qualifier.BreakingNewsModuleMapper
 import com.example.newsproject.di.qualifier.TopNewsModuleMapper
 import com.example.newsproject.domain.mapper.ISingleMapper
+import com.example.newsproject.domain.mapper.impl.BreakingNewsLocalMapper
 import com.example.newsproject.domain.mapper.impl.BreakingNewsMapper
 import com.example.newsproject.domain.mapper.impl.TopNewsMapper
 import com.example.newsproject.model.BreakingNewsItemModel
@@ -28,8 +31,15 @@ class MapperModule {
     @TopNewsModuleMapper
     @Provides
     @Singleton
-    fun provideNewsMapper(): ISingleMapper<ArticleItemResponse, TopStoriesNewsItemModel> {
+    fun provideTopNewsMapper(): ISingleMapper<ArticleItemResponse, TopStoriesNewsItemModel> {
         return TopNewsMapper()
+    }
+
+    @BreakingNewsLocalModuleMapper
+    @Provides
+    @Singleton
+    fun provideBreakingNewsLocalMapper(): ISingleMapper<ArticleItemResponse, BreakingNewsEntity> {
+        return BreakingNewsLocalMapper()
     }
 
 }

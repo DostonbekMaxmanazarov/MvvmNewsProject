@@ -2,6 +2,7 @@ package com.example.newsproject.presentation.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -10,7 +11,7 @@ import com.example.newsproject.R
 import com.example.newsproject.databinding.FragmentNewsBinding
 import com.example.newsproject.presentation.adapter.NewsAdapter
 import com.example.newsproject.presentation.vm.NewsViewModel
-import com.example.newsproject.util.ResultEvent
+import com.example.newsproject.datasource.utils.ResultEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -45,10 +46,27 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         vm.newsStateFlow.onEach {
             when (it) {
                 is ResultEvent.Success -> adapter.submitData(data = it.data)
-                is ResultEvent.Error -> {}
-                is ResultEvent.Loading -> {}
+                is ResultEvent.Failure -> {
+                    showDialog()
+                    binding.rv.visibility = View.GONE
+                }
+                is ResultEvent.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun showDialog() {
+        AlertDialog.Builder(requireContext()).setTitle("Error")
+            .setMessage("There is an error loading data from the server. Do you want to load data from a database?")
+            .setPositiveButton(
+                "Yes"
+            ) { _, _ ->
+
+            }.setNegativeButton(
+                "No", null
+            ).show()
     }
 
     override fun onDestroy() {

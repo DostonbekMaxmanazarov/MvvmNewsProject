@@ -1,7 +1,10 @@
 package com.example.newsproject.di.module
 
+import com.example.newsproject.datasource.local.entity.BreakingNewsEntity
+import com.example.newsproject.datasource.local.repository.IBreakingNewsLocalRepository
 import com.example.newsproject.datasource.remote.repository.INewsRemoteRepository
 import com.example.newsproject.datasource.remote.response.ArticleItemResponse
+import com.example.newsproject.di.qualifier.BreakingNewsLocalModuleMapper
 import com.example.newsproject.di.qualifier.BreakingNewsModuleMapper
 import com.example.newsproject.di.qualifier.TopNewsModuleMapper
 import com.example.newsproject.domain.mapper.ISingleMapper
@@ -24,9 +27,11 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideBreakingNewsUseCase(
-        repository: INewsRemoteRepository,
-        @BreakingNewsModuleMapper mapper: ISingleMapper<ArticleItemResponse, BreakingNewsItemModel>
-    ): IBreakingNewsUseCase = BreakingNewsUseCaseImpl(repository, mapper)
+        remoteRepository: INewsRemoteRepository,
+        localRepository: IBreakingNewsLocalRepository,
+        @BreakingNewsModuleMapper breakingNewsRemoteMapper: ISingleMapper<ArticleItemResponse, BreakingNewsItemModel>,
+        @BreakingNewsLocalModuleMapper breakingNewsLocalMapper: ISingleMapper<ArticleItemResponse, BreakingNewsEntity>,
+    ): IBreakingNewsUseCase = BreakingNewsUseCaseImpl(remoteRepository,localRepository, breakingNewsRemoteMapper,breakingNewsLocalMapper)
 
     @Provides
     @Singleton

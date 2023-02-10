@@ -9,3 +9,11 @@ annotation class BreakingNewsModuleMapper
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class TopNewsModuleMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class BreakingNewsLocalModuleMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class TopNewsLocalModuleMapper

@@ -16,4 +16,13 @@ object Constants {
     const val TOP_NEWS_TABLE = "top_news"
     const val DATABASE_VERSION = 1
     const val DATABASE_NAME = "news_database"
+
+    /**
+     * Http error
+     * */
+    const val MESSAGE = "message"
+    const val EXCEPTION = "exception"
+    const val ERROR = "error"
+    const val UNKNOWN_ERROR =
+        "Unknown error structure, we can not find error message"
 }

@@ -7,7 +7,7 @@ import com.example.newsproject.domain.mapper.ISingleMapper
 import com.example.newsproject.domain.usecase.ITopStoriesUseCase
 import com.example.newsproject.model.TopStoriesNewsItemModel
 import com.example.newsproject.model.TopStoriesNewsModel
-import com.example.newsproject.util.ResultEvent
+import com.example.newsproject.datasource.utils.ResultEvent
 import javax.inject.Inject
 
 class TopStoriesUseCaseImpl @Inject constructor(
@@ -23,9 +23,9 @@ class TopStoriesUseCaseImpl @Inject constructor(
             if (result != null) {
                 val newsModel = result.map { newsMapper.invoke(it) }
                 ResultEvent.Success(TopStoriesNewsModel(newsModel))
-            } else ResultEvent.Error("Articles not found")
+            } else ResultEvent.Failure("Articles not found")
         } catch (t: Throwable) {
-            ResultEvent.Error(t.message)
+            ResultEvent.Failure("Connection Error")
         }
     }
 }

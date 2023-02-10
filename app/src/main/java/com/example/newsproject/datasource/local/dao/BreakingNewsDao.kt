@@ -12,11 +12,11 @@ import com.example.newsproject.util.Constants.TOP_NEWS_TABLE
 @Dao
 interface BreakingNewsDao {
     @Query("SELECT * FROM $BREAKING_NEWS_TABLE")
-    suspend fun getAllTopNews(): List<BreakingNewsEntity>
+    suspend fun getAllBreakingNews(): List<BreakingNewsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addTopNews(news: List<BreakingNewsEntity>)
+    suspend fun addBreakingNews(news: List<BreakingNewsEntity>)
 
     @Query("DELETE FROM $TOP_NEWS_TABLE")
-    suspend fun deleteAllTopNews()
+    suspend fun deleteAllBreakingNews()
 }

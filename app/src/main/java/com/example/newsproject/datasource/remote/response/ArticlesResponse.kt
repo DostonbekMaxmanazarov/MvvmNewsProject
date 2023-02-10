@@ -1,6 +1,9 @@
 package com.example.newsproject.datasource.remote.response
 
 import kotlinx.serialization.Serializable
+import retrofit2.Response
+
+typealias ArticlesResult = Response<ArticlesResponse>
 
 @Serializable
 data class ArticlesResponse(
