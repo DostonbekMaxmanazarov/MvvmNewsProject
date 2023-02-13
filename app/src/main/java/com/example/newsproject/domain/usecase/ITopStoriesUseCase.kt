@@ -4,5 +4,5 @@ import com.example.newsproject.model.TopStoriesNewsModel
 import com.example.newsproject.datasource.utils.ResultEvent
 
 interface ITopStoriesUseCase {
-    suspend operator fun invoke(): ResultEvent<TopStoriesNewsModel>
+    suspend operator fun invoke(isLoadingLocal:Boolean): ResultEvent<TopStoriesNewsModel>
 }

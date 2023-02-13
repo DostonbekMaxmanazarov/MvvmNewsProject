@@ -1,6 +1,5 @@
 package com.example.newsproject.datasource.local.repository
 
-import com.example.newsproject.datasource.local.entity.BreakingNewsEntity
 import com.example.newsproject.datasource.local.entity.TopNewsEntity
 
 interface ITopNewsLocalRepository {

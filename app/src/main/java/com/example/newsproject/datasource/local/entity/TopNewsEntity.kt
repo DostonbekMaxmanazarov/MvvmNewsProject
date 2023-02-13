@@ -6,10 +6,10 @@ import com.example.newsproject.util.Constants.TOP_NEWS_TABLE
 
 @Entity(TOP_NEWS_TABLE)
 data class TopNewsEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val imageUrl: String,
-    val name: String,
-    val title: String,
-    val description: String,
-    val publishedAt: String
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val imageUrl: String?,
+    val name: String?,
+    val title: String?,
+    val description: String?,
+    val publishedAt: String?
 )

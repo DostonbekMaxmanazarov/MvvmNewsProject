@@ -4,5 +4,5 @@ import com.example.newsproject.model.BreakingNewsModel
 import com.example.newsproject.datasource.utils.ResultEvent
 
 interface IBreakingNewsUseCase {
-    suspend operator fun invoke(isSuccessNetwork:Boolean): ResultEvent<BreakingNewsModel>
+    suspend operator fun invoke(isLoadingLocal:Boolean): ResultEvent<BreakingNewsModel>
 }

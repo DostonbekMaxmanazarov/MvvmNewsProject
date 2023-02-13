@@ -1,12 +1,12 @@
 package com.example.newsproject.di.module
 
 import com.example.newsproject.datasource.local.entity.BreakingNewsEntity
+import com.example.newsproject.datasource.local.entity.TopNewsEntity
 import com.example.newsproject.datasource.local.repository.IBreakingNewsLocalRepository
+import com.example.newsproject.datasource.local.repository.ITopNewsLocalRepository
 import com.example.newsproject.datasource.remote.repository.INewsRemoteRepository
 import com.example.newsproject.datasource.remote.response.ArticleItemResponse
-import com.example.newsproject.di.qualifier.BreakingNewsLocalModuleMapper
-import com.example.newsproject.di.qualifier.BreakingNewsModuleMapper
-import com.example.newsproject.di.qualifier.TopNewsModuleMapper
+import com.example.newsproject.di.qualifier.*
 import com.example.newsproject.domain.mapper.ISingleMapper
 import com.example.newsproject.domain.usecase.IBreakingNewsUseCase
 import com.example.newsproject.domain.usecase.ITopStoriesUseCase
@@ -31,13 +31,29 @@ class UseCaseModule {
         localRepository: IBreakingNewsLocalRepository,
         @BreakingNewsModuleMapper breakingNewsRemoteMapper: ISingleMapper<ArticleItemResponse, BreakingNewsItemModel>,
         @BreakingNewsLocalModuleMapper breakingNewsLocalMapper: ISingleMapper<ArticleItemResponse, BreakingNewsEntity>,
-    ): IBreakingNewsUseCase = BreakingNewsUseCaseImpl(remoteRepository,localRepository, breakingNewsRemoteMapper,breakingNewsLocalMapper)
+        @ParseToBreakingNewsModuleMapper parseToBreakingNewsLocalMapper: ISingleMapper<BreakingNewsEntity, BreakingNewsItemModel>
+    ): IBreakingNewsUseCase = BreakingNewsUseCaseImpl(
+        remoteRepository,
+        localRepository,
+        breakingNewsRemoteMapper,
+        breakingNewsLocalMapper,
+        parseToBreakingNewsLocalMapper
+    )
 
     @Provides
     @Singleton
     fun provideTopNewsUseCase(
         repository: INewsRemoteRepository,
-        @TopNewsModuleMapper mapper: ISingleMapper<ArticleItemResponse, TopStoriesNewsItemModel>
-    ): ITopStoriesUseCase = TopStoriesUseCaseImpl(repository, mapper)
+        localRepository: ITopNewsLocalRepository,
+        @TopNewsModuleMapper mapper: ISingleMapper<ArticleItemResponse, TopStoriesNewsItemModel>,
+        @TopNewsLocalModuleMapper breakingNewsLocalMapper: ISingleMapper<ArticleItemResponse, TopNewsEntity>,
+        @ParseToTopNewsModuleMapper parseToBreakingNewsLocalMapper: ISingleMapper<TopNewsEntity, TopStoriesNewsItemModel>
+    ): ITopStoriesUseCase = TopStoriesUseCaseImpl(
+        repository,
+        localRepository,
+        mapper,
+        breakingNewsLocalMapper,
+        parseToBreakingNewsLocalMapper
+    )
 
 }

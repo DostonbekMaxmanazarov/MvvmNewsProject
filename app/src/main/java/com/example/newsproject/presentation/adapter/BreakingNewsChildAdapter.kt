@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.newsproject.R
 import com.example.newsproject.databinding.ItemBreakingNewsBinding
 import com.example.newsproject.model.BreakingNewsItemModel
 
@@ -36,6 +38,10 @@ class BreakingNewsChildAdapter : RecyclerView.Adapter<BreakingNewsChildAdapter.V
         fun bind(data: BreakingNewsItemModel) {
             binding.tvTitle.text = data.name
             binding.tvDescription.text = data.content
+            binding.tvDate.text = data.publishedAt
+
+            Glide.with(binding.root).load(data.imageUrl).placeholder(R.drawable.nature_photo)
+                .into(binding.ivNews)
         }
     }
 }

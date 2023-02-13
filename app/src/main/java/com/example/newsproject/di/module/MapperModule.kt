@@ -1,14 +1,11 @@
 package com.example.newsproject.di.module
 
 import com.example.newsproject.datasource.local.entity.BreakingNewsEntity
+import com.example.newsproject.datasource.local.entity.TopNewsEntity
 import com.example.newsproject.datasource.remote.response.ArticleItemResponse
-import com.example.newsproject.di.qualifier.BreakingNewsLocalModuleMapper
-import com.example.newsproject.di.qualifier.BreakingNewsModuleMapper
-import com.example.newsproject.di.qualifier.TopNewsModuleMapper
+import com.example.newsproject.di.qualifier.*
 import com.example.newsproject.domain.mapper.ISingleMapper
-import com.example.newsproject.domain.mapper.impl.BreakingNewsLocalMapper
-import com.example.newsproject.domain.mapper.impl.BreakingNewsMapper
-import com.example.newsproject.domain.mapper.impl.TopNewsMapper
+import com.example.newsproject.domain.mapper.impl.*
 import com.example.newsproject.model.BreakingNewsItemModel
 import com.example.newsproject.model.TopStoriesNewsItemModel
 import dagger.Module
@@ -28,6 +25,20 @@ class MapperModule {
         return BreakingNewsMapper()
     }
 
+    @BreakingNewsLocalModuleMapper
+    @Provides
+    @Singleton
+    fun provideBreakingNewsLocalMapper(): ISingleMapper<ArticleItemResponse, BreakingNewsEntity> {
+        return BreakingNewsLocalMapper()
+    }
+
+    @ParseToBreakingNewsModuleMapper
+    @Provides
+    @Singleton
+    fun provideParseToBreakingNewsMapper(): ISingleMapper<BreakingNewsEntity, BreakingNewsItemModel> {
+        return ParseToBreakingNewsMapper()
+    }
+
     @TopNewsModuleMapper
     @Provides
     @Singleton
@@ -35,11 +46,18 @@ class MapperModule {
         return TopNewsMapper()
     }
 
-    @BreakingNewsLocalModuleMapper
+    @TopNewsLocalModuleMapper
     @Provides
     @Singleton
-    fun provideBreakingNewsLocalMapper(): ISingleMapper<ArticleItemResponse, BreakingNewsEntity> {
-        return BreakingNewsLocalMapper()
+    fun provideTopNewsLocalMapper(): ISingleMapper<ArticleItemResponse, TopNewsEntity> {
+        return TopNewsLocalMapper()
+    }
+
+    @ParseToTopNewsModuleMapper
+    @Provides
+    @Singleton
+    fun provideParseToTopNewsMapper(): ISingleMapper<TopNewsEntity, TopStoriesNewsItemModel> {
+        return ParseToTopNewsMapper()
     }
 
 }

@@ -17,3 +17,11 @@ annotation class BreakingNewsLocalModuleMapper
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class TopNewsLocalModuleMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ParseToBreakingNewsModuleMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ParseToTopNewsModuleMapper

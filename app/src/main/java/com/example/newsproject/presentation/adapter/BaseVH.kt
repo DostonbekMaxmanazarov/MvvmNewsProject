@@ -17,8 +17,8 @@ sealed class BaseVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
     class BreakingNewsTitleVH(private val binding: ItemBreakingNewsTitleBinding) :
         BaseVH(binding.root) {
         fun bind(data: BreakingNewsTitleModel) {
-            binding.tvDate.text = data.title
-            binding.tvTitle.text = data.strDate
+            binding.tvDate.text = data.strDate
+            binding.tvTitle.text = data.title
         }
     }
 

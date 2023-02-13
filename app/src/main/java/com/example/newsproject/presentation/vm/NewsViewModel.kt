@@ -29,20 +29,11 @@ class NewsViewModel @Inject constructor(
         getTopStories()
     }
 
-    private fun getTopStories() {
+    fun getTopStories(isLoadingLocal: Boolean = false) {
         viewModelScope.launch {
             _newsStateFlow.emit(ResultEvent.Loading)
-            _newsStateFlow.emit(
-                ResultEvent.Success(
-                    BreakingNewsTitleModel(
-                        "Breaking news", "Fevral 9, 2023"
-                    )
-                )
-            )
-            _newsStateFlow.emit(breakingNewsUseCaseImpl.invoke())
-            _newsStateFlow.emit(ResultEvent.Success(TopStoriesNewsTitleModel("Top Stories")))
-            _newsStateFlow.emit(topStoriesUseCase.invoke())
-
+            _newsStateFlow.emit(breakingNewsUseCaseImpl.invoke(isLoadingLocal))
+            _newsStateFlow.emit(topStoriesUseCase.invoke(isLoadingLocal))
         }
     }
 }
