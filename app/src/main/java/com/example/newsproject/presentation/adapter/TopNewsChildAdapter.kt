@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsproject.R
-import com.example.newsproject.databinding.ItemBreakingNewsBinding
 import com.example.newsproject.databinding.ItemNewsTopStoriesBinding
-import com.example.newsproject.model.BreakingNewsItemModel
+import com.example.newsproject.model.BaseNewsModel
 import com.example.newsproject.model.TopStoriesNewsItemModel
 import com.example.newsproject.model.TopStoriesNewsTitleModel
 
@@ -17,6 +16,11 @@ class TopNewsChildAdapter : RecyclerView.Adapter<TopNewsChildAdapter.VH>() {
 
     private val mList = mutableListOf<TopStoriesNewsItemModel>()
     private lateinit var binding: ItemNewsTopStoriesBinding
+    private var listener: ((TopStoriesNewsItemModel) -> Unit)? = null
+
+    fun setOnClickListener(listener: (TopStoriesNewsItemModel) -> Unit) {
+        this.listener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val view = LayoutInflater.from(parent.context)
@@ -34,18 +38,22 @@ class TopNewsChildAdapter : RecyclerView.Adapter<TopNewsChildAdapter.VH>() {
         notifyDataSetChanged()
     }
 
-    class VH(
+    inner class VH(
         private val binding: ItemNewsTopStoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                listener?.invoke(mList[adapterPosition])
+            }
+        }
 
         fun bind(data: TopStoriesNewsItemModel) {
             binding.tvTitle.text = data.name
             binding.tvDescription.text = data.content
             binding.tvDate.text = data.publishedAt
 
-            Glide.with(binding.root)
-                .load(data.imageUrl)
-                .placeholder(R.drawable.nature_photo)
+            Glide.with(binding.root).load(data.imageUrl).placeholder(R.drawable.nature_photo)
                 .into(binding.ivNews)
         }
     }

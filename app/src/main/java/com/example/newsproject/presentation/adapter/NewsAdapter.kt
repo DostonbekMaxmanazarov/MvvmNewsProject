@@ -17,13 +17,26 @@ const val NEWS_TOP_STORIES_TITLE = R.layout.item_news_top_stories_title
 class NewsAdapter : RecyclerView.Adapter<BaseVH>() {
 
     private val mList = mutableListOf<BaseNewsModel>()
+    private var listener: ((BaseNewsItemModel) -> Unit)? = null
+
+    fun setOnClickListener(listener: (BaseNewsItemModel) -> Unit) {
+        this.listener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseVH {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return when (viewType) {
-            BREAKING_NEWS -> BaseVH.BreakingNewsVH(ItemChildBreakingNewsBinding.bind(view), parent.context)
+            BREAKING_NEWS -> BaseVH.BreakingNewsVH(
+                ItemChildBreakingNewsBinding.bind(view), parent.context
+            ) {
+                listener?.invoke(it)
+            }
             BREAKING_NEWS_TITLE -> BaseVH.BreakingNewsTitleVH(ItemBreakingNewsTitleBinding.bind(view))
-            NEWS_TOP_STORIES -> BaseVH.NewsTopStoriesVH(ItemChildTopNewsBinding.bind(view),parent.context)
+            NEWS_TOP_STORIES -> BaseVH.NewsTopStoriesVH(
+                ItemChildTopNewsBinding.bind(view), parent.context
+            ) {
+                listener?.invoke(it)
+            }
             NEWS_TOP_STORIES_TITLE -> BaseVH.NewsTopStoriesTitleVH(
                 ItemNewsTopStoriesTitleBinding.bind(
                     view

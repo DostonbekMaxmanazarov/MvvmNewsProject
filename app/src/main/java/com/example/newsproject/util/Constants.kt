@@ -25,4 +25,9 @@ object Constants {
     const val ERROR = "error"
     const val UNKNOWN_ERROR =
         "Unknown error structure, we can not find error message"
+
+    /**
+     * Bundle
+     * */
+    const val SENDING_NEWS_MODEL="sending_news_model"
 }

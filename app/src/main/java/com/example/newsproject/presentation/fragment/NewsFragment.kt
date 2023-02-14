@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,8 @@ import com.example.newsproject.model.BreakingNewsModel
 import com.example.newsproject.model.BreakingNewsTitleModel
 import com.example.newsproject.model.TopStoriesNewsModel
 import com.example.newsproject.model.TopStoriesNewsTitleModel
+import com.example.newsproject.util.Constants
+import com.example.newsproject.util.addFragment
 import com.example.newsproject.util.toDateFormatted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -39,6 +43,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         initRecyclerView()
         loadData()
         initView()
+        initClickView()
     }
 
     private fun initView() {
@@ -89,8 +94,21 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    private fun initClickView() {
+        adapter.setOnClickListener {
+            addFragment(
+                containerId = R.id.container,
+                fragment = DetailFragment(),
+                args = bundleOf(Constants.SENDING_NEWS_MODEL to it),
+                addToBackStack = true
+            )
+        }
+    }
+
     private fun showDialog() {
-        AlertDialog.Builder(requireContext()).setTitle("Error").setMessage(
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage(
             "There is an error loading data from the server. " + "Do you want to load data from a database?"
         ).setPositiveButton(
             "Yes"

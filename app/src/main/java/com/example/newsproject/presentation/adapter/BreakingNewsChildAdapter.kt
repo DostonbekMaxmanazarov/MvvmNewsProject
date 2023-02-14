@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsproject.R
 import com.example.newsproject.databinding.ItemBreakingNewsBinding
+import com.example.newsproject.model.BaseNewsItemModel
+import com.example.newsproject.model.BaseNewsModel
 import com.example.newsproject.model.BreakingNewsItemModel
 
 @SuppressLint("NotifyDataSetChanged")
@@ -14,7 +16,11 @@ class BreakingNewsChildAdapter : RecyclerView.Adapter<BreakingNewsChildAdapter.V
 
     private val mList = mutableListOf<BreakingNewsItemModel>()
     private lateinit var binding: ItemBreakingNewsBinding
+    private var listener: ((BaseNewsItemModel) -> Unit)? = null
 
+    fun setOnClickListener(listener: (BaseNewsItemModel) -> Unit) {
+        this.listener = listener
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val view = LayoutInflater.from(parent.context)
         binding = ItemBreakingNewsBinding.inflate(view, parent, false)
@@ -31,9 +37,15 @@ class BreakingNewsChildAdapter : RecyclerView.Adapter<BreakingNewsChildAdapter.V
         notifyDataSetChanged()
     }
 
-    class VH(
+   inner class VH(
         private val binding: ItemBreakingNewsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
+       init {
+           binding.root.setOnClickListener {
+               listener?.invoke(mList[adapterPosition])
+           }
+       }
 
         fun bind(data: BreakingNewsItemModel) {
             binding.tvTitle.text = data.name
