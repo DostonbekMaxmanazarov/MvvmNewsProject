@@ -30,4 +30,5 @@ object Constants {
      * Bundle
      * */
     const val SENDING_NEWS_MODEL="sending_news_model"
+    //
 }
