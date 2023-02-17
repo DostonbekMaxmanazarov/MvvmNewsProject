@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginTop="16dp"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivNewsPhoto"
+        android:layout_width="160dp"
+        android:src="@drawable/nature_photo"
+        android:scaleType="centerCrop"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:typeface="serif"
+        android:textColor="@color/white"
+        android:layout_marginStart="8dp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/ivNewsPhoto"
+        android:text="@string/dummy_text"
+        app:layout_constraintTop_toTopOf="@id/ivNewsPhoto" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/font_falling_sky"
+        android:text="@string/name"
+        android:textColor="@color/text_color"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/ivNewsPhoto"
+        app:layout_constraintBottom_toBottomOf="@id/ivNewsPhoto" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/font_falling_sky"
+        android:text="@string/date_month"
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/ivBookMark"
+        app:layout_constraintBottom_toBottomOf="@id/ivNewsPhoto" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBookMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_bookmark_white"
+        app:layout_constraintBottom_toBottomOf="@id/ivNewsPhoto"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
