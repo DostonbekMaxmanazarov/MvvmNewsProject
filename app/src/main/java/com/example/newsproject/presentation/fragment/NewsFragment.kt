@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +14,7 @@ import com.example.newsproject.databinding.FragmentNewsBinding
 import com.example.newsproject.presentation.adapter.NewsAdapter
 import com.example.newsproject.presentation.vm.NewsViewModel
 import com.example.newsproject.datasource.utils.ResultEvent
-import com.example.newsproject.model.BreakingNewsModel
+import com.example.newsproject.model.CategoryNewsModel
 import com.example.newsproject.model.BreakingNewsTitleModel
 import com.example.newsproject.model.TopStoriesNewsModel
 import com.example.newsproject.model.TopStoriesNewsTitleModel
@@ -67,7 +66,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
                 is ResultEvent.Success -> {
                     binding.rv.visibility = View.VISIBLE
                     binding.swipeRefresh.isRefreshing = false
-                    if (it.data is BreakingNewsModel) {
+                    if (it.data is CategoryNewsModel) {
                         adapter.submitData(
                             BreakingNewsTitleModel(
                                 "Breaking news", Date().toDateFormatted()

@@ -8,7 +8,6 @@ import javax.inject.Inject
 class NewsRemoteRepositoryImpl @Inject constructor(
     private val newsApi: NewsApi
 ) : INewsRemoteRepository {
-    override suspend fun getBreakingNews(): ArticlesResponse = newsApi.getBreakingNews()
-
-    override suspend fun getTopStories(): ArticlesResponse = newsApi.getTopStories()
+    override suspend fun getCategoryNews(category: String): ArticlesResponse =
+        newsApi.getCategoryNews(category)
 }

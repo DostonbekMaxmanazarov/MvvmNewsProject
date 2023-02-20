@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.example.newsproject.util.Constants.BREAKING_NEWS_TABLE
 
 @Entity(BREAKING_NEWS_TABLE)
-data class BreakingNewsEntity(
+data class CategoryNewsEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val imageUrl: String?,
     val name: String?,

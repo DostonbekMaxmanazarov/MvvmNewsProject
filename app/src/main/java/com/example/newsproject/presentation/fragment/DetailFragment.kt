@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.newsproject.R
 import com.example.newsproject.databinding.FragmentDetailBinding
 import com.example.newsproject.model.BaseNewsItemModel
-import com.example.newsproject.model.BreakingNewsItemModel
+import com.example.newsproject.model.CategoryNewsItemModel
 import com.example.newsproject.model.TopStoriesNewsItemModel
 import com.example.newsproject.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,8 +36,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 Glide.with(binding.root).load(imageUrl).placeholder(R.drawable.nature_photo)
                     .into(binding.ivNews)
             }
-        } else if (data is BreakingNewsItemModel) {
-            (data as BreakingNewsItemModel).apply {
+        } else if (data is CategoryNewsItemModel) {
+            (data as CategoryNewsItemModel).apply {
                 binding.tvDate.text = publishedAt
                 binding.tvTitle.text = name
                 binding.tvDescription.text = content

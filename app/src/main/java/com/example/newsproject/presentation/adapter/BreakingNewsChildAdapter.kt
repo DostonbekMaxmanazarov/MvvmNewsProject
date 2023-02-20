@@ -8,13 +8,12 @@ import com.bumptech.glide.Glide
 import com.example.newsproject.R
 import com.example.newsproject.databinding.ItemBreakingNewsBinding
 import com.example.newsproject.model.BaseNewsItemModel
-import com.example.newsproject.model.BaseNewsModel
-import com.example.newsproject.model.BreakingNewsItemModel
+import com.example.newsproject.model.CategoryNewsItemModel
 
 @SuppressLint("NotifyDataSetChanged")
 class BreakingNewsChildAdapter : RecyclerView.Adapter<BreakingNewsChildAdapter.VH>() {
 
-    private val mList = mutableListOf<BreakingNewsItemModel>()
+    private val mList = mutableListOf<CategoryNewsItemModel>()
     private lateinit var binding: ItemBreakingNewsBinding
     private var listener: ((BaseNewsItemModel) -> Unit)? = null
 
@@ -31,7 +30,7 @@ class BreakingNewsChildAdapter : RecyclerView.Adapter<BreakingNewsChildAdapter.V
 
     override fun getItemCount() = mList.size
 
-    fun submitList(data: MutableList<BreakingNewsItemModel>) {
+    fun submitList(data: MutableList<CategoryNewsItemModel>) {
         mList.clear()
         mList.addAll(data)
         notifyDataSetChanged()
@@ -47,7 +46,7 @@ class BreakingNewsChildAdapter : RecyclerView.Adapter<BreakingNewsChildAdapter.V
            }
        }
 
-        fun bind(data: BreakingNewsItemModel) {
+        fun bind(data: CategoryNewsItemModel) {
             binding.tvTitle.text = data.name
             binding.tvDescription.text = data.content
             binding.tvDate.text = data.publishedAt

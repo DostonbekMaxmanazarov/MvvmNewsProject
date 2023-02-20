@@ -48,7 +48,7 @@ class NewsAdapter : RecyclerView.Adapter<BaseVH>() {
 
     override fun onBindViewHolder(holder: BaseVH, position: Int) {
         when (holder) {
-            is BaseVH.BreakingNewsVH -> holder.setData(mList[position] as BreakingNewsModel)
+            is BaseVH.BreakingNewsVH -> holder.setData(mList[position] as CategoryNewsModel)
             is BaseVH.BreakingNewsTitleVH -> holder.bind(mList[position] as BreakingNewsTitleModel)
             is BaseVH.NewsTopStoriesVH -> holder.setData(mList[position] as TopStoriesNewsModel)
             is BaseVH.NewsTopStoriesTitleVH -> holder.bind(mList[position] as TopStoriesNewsTitleModel)
@@ -56,7 +56,7 @@ class NewsAdapter : RecyclerView.Adapter<BaseVH>() {
     }
 
     override fun getItemViewType(position: Int) = when (mList[position]) {
-        is BreakingNewsModel -> BREAKING_NEWS
+        is CategoryNewsModel -> BREAKING_NEWS
         is BreakingNewsTitleModel -> BREAKING_NEWS_TITLE
         is TopStoriesNewsTitleModel -> NEWS_TOP_STORIES_TITLE
         is TopStoriesNewsModel -> NEWS_TOP_STORIES

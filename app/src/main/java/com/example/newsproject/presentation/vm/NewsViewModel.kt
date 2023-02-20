@@ -2,11 +2,9 @@ package com.example.newsproject.presentation.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsproject.domain.usecase.IBreakingNewsUseCase
+import com.example.newsproject.domain.usecase.ICategoryNewsUseCase
 import com.example.newsproject.domain.usecase.ITopStoriesUseCase
 import com.example.newsproject.model.BaseNewsModel
-import com.example.newsproject.model.BreakingNewsTitleModel
-import com.example.newsproject.model.TopStoriesNewsTitleModel
 import com.example.newsproject.datasource.utils.ResultEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsViewModel @Inject constructor(
-    private val breakingNewsUseCaseImpl: IBreakingNewsUseCase,
+    private val breakingNewsUseCaseImpl: ICategoryNewsUseCase,
     private val topStoriesUseCase: ITopStoriesUseCase
 ) : ViewModel() {
 

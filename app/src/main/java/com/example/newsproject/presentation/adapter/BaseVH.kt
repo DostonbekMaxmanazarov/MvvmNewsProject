@@ -35,8 +35,8 @@ sealed class BaseVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
             adapter?.setOnClickListener { listener.invoke(it) }
         }
 
-        fun setData(breakingNewsModel: BreakingNewsModel) {
-            adapter?.submitList(breakingNewsModel.breakingNews.toMutableList())
+        fun setData(categoryNewsModel: CategoryNewsModel) {
+            adapter?.submitList(categoryNewsModel.breakingNews.toMutableList())
         }
     }
 

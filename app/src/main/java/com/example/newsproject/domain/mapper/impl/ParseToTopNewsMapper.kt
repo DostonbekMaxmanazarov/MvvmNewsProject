@@ -2,7 +2,6 @@ package com.example.newsproject.domain.mapper.impl
 
 import com.example.newsproject.datasource.local.entity.TopNewsEntity
 import com.example.newsproject.domain.mapper.ISingleMapper
-import com.example.newsproject.model.BreakingNewsItemModel
 import com.example.newsproject.model.TopStoriesNewsItemModel
 
 class ParseToTopNewsMapper : ISingleMapper<TopNewsEntity, TopStoriesNewsItemModel> {
