@@ -2,8 +2,8 @@ package com.example.newsproject.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.example.newsproject.datasource.local.dao.BreakingNewsDao
-import com.example.newsproject.datasource.local.dao.TopNewsDao
+import com.example.newsproject.datasource.local.dao.BookmarkNewsDao
+import com.example.newsproject.datasource.local.dao.CategoryNewsDao
 import com.example.newsproject.datasource.local.database.NewsDatabase
 import com.example.newsproject.util.Constants.DATABASE_NAME
 import dagger.Module
@@ -29,9 +29,9 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideBreakingNewsDao(database: NewsDatabase): BreakingNewsDao = database.breakingNewsDao()
+    fun provideCategoryNewsDao(database: NewsDatabase): CategoryNewsDao = database.categoryNewsDao()
 
     @Provides
     @Singleton
-    fun provideTopNewsDao(database: NewsDatabase): TopNewsDao = database.topNewsDao()
+    fun provideBookmarkNewsDao(database: NewsDatabase): BookmarkNewsDao = database.bookmarkNewsDao()
 }

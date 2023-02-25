@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
 
     // background colors
     <color name="background_color">#2F313A</color>
@@ -17,5 +18,11 @@
 
     // text color
     <color name="text_color">#D1D1D3</color>
+
+    // loader color
+    <color name="loader_color">#52DCFF</color>
+
+    // floating action button color
+    <color name="floating_color">#495461</color>
 
 </resources>

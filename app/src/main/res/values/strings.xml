@@ -26,4 +26,6 @@
     <string name="name">The Verge</string>
     <string name="date">28 minutes ago</string>
     <string name="date_month">28m</string>
+    <string name="search">Search</string>
+    <string name="cancel">Cancel</string>
 </resources>

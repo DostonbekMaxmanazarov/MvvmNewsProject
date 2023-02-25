@@ -4,24 +4,24 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class BreakingNewsModuleMapper
+annotation class CategoryNewsModuleMapper
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class TopNewsModuleMapper
+annotation class SearchNewsModuleMapper
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class BreakingNewsLocalModuleMapper
+annotation class CategoryNewsLocalModuleMapper
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class TopNewsLocalModuleMapper
+annotation class ParseToCategoryNewsModuleMapper
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class ParseToBreakingNewsModuleMapper
+annotation class CategoryBookmarkLocalModuleMapper
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class ParseToTopNewsModuleMapper
+annotation class SearchingBookmarkLocalModuleMapper

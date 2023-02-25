@@ -1,18 +1,24 @@
 package com.example.newsproject.di.module
 
+import com.example.newsproject.datasource.local.entity.BookmarkNewsEntity
 import com.example.newsproject.datasource.local.entity.CategoryNewsEntity
-import com.example.newsproject.datasource.local.entity.TopNewsEntity
-import com.example.newsproject.datasource.local.repository.ICategoryNewsLocalRepository
-import com.example.newsproject.datasource.local.repository.ITopNewsLocalRepository
-import com.example.newsproject.datasource.remote.repository.INewsRemoteRepository
-import com.example.newsproject.datasource.remote.response.ArticleItemResponse
+import com.example.newsproject.datasource.local.repository.IBookmarkLocalRepository
+import com.example.newsproject.datasource.local.repository.ICategoryLocalRepository
+import com.example.newsproject.datasource.remote.repository.ICategoryRemoteRepository
+import com.example.newsproject.datasource.remote.repository.ISearchRemoteRepository
+import com.example.newsproject.datasource.remote.response.ArticleDataResponse
 import com.example.newsproject.di.qualifier.*
 import com.example.newsproject.domain.mapper.ISingleMapper
+import com.example.newsproject.domain.usecase.ICategoryAddBookmarkUseCase
 import com.example.newsproject.domain.usecase.ICategoryNewsUseCase
-import com.example.newsproject.domain.usecase.ITopStoriesUseCase
+import com.example.newsproject.domain.usecase.ISearchNewsUseCase
+import com.example.newsproject.domain.usecase.ISearchingAddBookmarkUseCase
+import com.example.newsproject.domain.usecase.impl.CategoryAddBookmarkUseCaseImpl
 import com.example.newsproject.domain.usecase.impl.CategoryNewsUseCaseImpl
+import com.example.newsproject.domain.usecase.impl.SearchNewsUseCaseImpl
+import com.example.newsproject.domain.usecase.impl.SearchingAddBookmarkUseCaseImpl
 import com.example.newsproject.model.CategoryNewsItemModel
-import com.example.newsproject.model.TopStoriesNewsItemModel
+import com.example.newsproject.model.SearchNewsItemModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,34 +31,47 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideBreakingNewsUseCase(
-        remoteRepository: INewsRemoteRepository,
-        localRepository: ICategoryNewsLocalRepository,
-        @BreakingNewsModuleMapper breakingNewsRemoteMapper: ISingleMapper<ArticleItemResponse, CategoryNewsItemModel>,
-        @BreakingNewsLocalModuleMapper breakingNewsLocalMapper: ISingleMapper<ArticleItemResponse, CategoryNewsEntity>,
-        @ParseToBreakingNewsModuleMapper parseToBreakingNewsLocalMapper: ISingleMapper<CategoryNewsEntity, CategoryNewsItemModel>
+    fun provideCategoryNewsUseCase(
+        remoteRepository: ICategoryRemoteRepository,
+        localRepository: ICategoryLocalRepository,
+        @CategoryNewsModuleMapper categoryNewsRemoteMapper: ISingleMapper<ArticleDataResponse, CategoryNewsItemModel>,
+        @CategoryNewsLocalModuleMapper categoryNewsLocalMapper: ISingleMapper<ArticleDataResponse, CategoryNewsEntity>,
+        @ParseToCategoryNewsModuleMapper parseToCategoryNewsLocalMapper: ISingleMapper<CategoryNewsEntity, CategoryNewsItemModel>
     ): ICategoryNewsUseCase = CategoryNewsUseCaseImpl(
         remoteRepository,
         localRepository,
-        breakingNewsRemoteMapper,
-        breakingNewsLocalMapper,
-        parseToBreakingNewsLocalMapper
+        categoryNewsRemoteMapper,
+        categoryNewsLocalMapper,
+        parseToCategoryNewsLocalMapper
     )
 
     @Provides
     @Singleton
-    fun provideTopNewsUseCase(
-        repository: INewsRemoteRepository,
-        localRepository: ITopNewsLocalRepository,
-        @TopNewsModuleMapper mapper: ISingleMapper<ArticleItemResponse, TopStoriesNewsItemModel>,
-        @TopNewsLocalModuleMapper breakingNewsLocalMapper: ISingleMapper<ArticleItemResponse, TopNewsEntity>,
-        @ParseToTopNewsModuleMapper parseToBreakingNewsLocalMapper: ISingleMapper<TopNewsEntity, TopStoriesNewsItemModel>
-    ): ITopStoriesUseCase = TopStoriesUseCaseImpl(
-        repository,
-        localRepository,
-        mapper,
-        breakingNewsLocalMapper,
-        parseToBreakingNewsLocalMapper
+    fun provideSearchNewsUseCase(
+        remoteRepository: ISearchRemoteRepository,
+        @SearchNewsModuleMapper searchNewsRemoteMapper: ISingleMapper<ArticleDataResponse, SearchNewsItemModel>,
+    ): ISearchNewsUseCase = SearchNewsUseCaseImpl(
+        remoteRepository,
+        searchNewsRemoteMapper
     )
 
+    @Provides
+    @Singleton
+    fun provideSearchAddBookmarkUseCase(
+        localRepository: IBookmarkLocalRepository,
+        @SearchingBookmarkLocalModuleMapper searchBookmarkMapper: ISingleMapper<SearchNewsItemModel, BookmarkNewsEntity>,
+    ): ISearchingAddBookmarkUseCase = SearchingAddBookmarkUseCaseImpl(
+        localRepository,
+        searchBookmarkMapper
+    )
+
+    @Provides
+    @Singleton
+    fun provideCategoryAddBookmarkUseCase(
+        localRepository: IBookmarkLocalRepository,
+        @CategoryBookmarkLocalModuleMapper searchBookmarkMapper: ISingleMapper<CategoryNewsItemModel, BookmarkNewsEntity>,
+    ): ICategoryAddBookmarkUseCase = CategoryAddBookmarkUseCaseImpl(
+        localRepository,
+        searchBookmarkMapper
+    )
 }

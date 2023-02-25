@@ -40,7 +40,9 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
         val json = Json {
+            prettyPrint = true
             ignoreUnknownKeys = true
+            coerceInputValues = true
         }
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

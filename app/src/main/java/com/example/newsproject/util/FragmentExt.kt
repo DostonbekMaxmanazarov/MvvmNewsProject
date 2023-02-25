@@ -12,9 +12,22 @@ fun Fragment.addFragment(
     args: Bundle = bundleOf(),
     addToBackStack: Boolean = false
 ) {
+    fragment.arguments = args
     requireActivity().supportFragmentManager.commit {
-        fragment.arguments = args
         add(containerId, fragment)
+        if (addToBackStack) addToBackStack(fragment.javaClass.simpleName)
+    }
+}
+
+fun Fragment.replaceFragment(
+    @IdRes containerId: Int,
+    fragment: Fragment,
+    args: Bundle = bundleOf(),
+    addToBackStack: Boolean = false
+) {
+    fragment.arguments = args
+    requireActivity().supportFragmentManager.commit {
+        replace(containerId, fragment)
         if (addToBackStack) addToBackStack(fragment.javaClass.simpleName)
     }
 }

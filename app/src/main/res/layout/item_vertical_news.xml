@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:id="@+id/ivNewsPhoto"
+        android:src="@drawable/nature_photo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNewsName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/font_falling_sky"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="The Verge" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNewsDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/font_falling_sky"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="July 15, 2023" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNewsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:maxLines="3"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:typeface="serif"
+        app:layout_constraintBottom_toTopOf="@id/tvNewsName"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="@string/dummy_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
