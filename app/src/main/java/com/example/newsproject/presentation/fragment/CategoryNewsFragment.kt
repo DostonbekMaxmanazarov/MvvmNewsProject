@@ -141,11 +141,6 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_main) {
             addFragment(R.id.container, BookmarkNewsFragment(), addToBackStack = true)
         }
 
-        binding.layoutHistory.setOnClickListener {
-            addFragment(R.id.container, HistoryFragment(), addToBackStack = true)
-
-        }
-
         binding.layoutSettings.setOnClickListener {
             addFragment(R.id.container, SettingsFragment(), addToBackStack = true)
 
