@@ -30,6 +30,6 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/text_color_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

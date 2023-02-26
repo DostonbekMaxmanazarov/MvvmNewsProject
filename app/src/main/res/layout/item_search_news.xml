@@ -26,7 +26,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:text="@string/fox_news"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color_white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:text="@string/text"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color_white"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvName" />
@@ -54,7 +54,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/april_16_2023"
             android:textSize="11sp"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 

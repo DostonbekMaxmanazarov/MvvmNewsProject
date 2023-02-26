@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -10,7 +11,7 @@
     <color name="transparent">#00000000</color>
 
     // background colors
-    <color name="background_color">#2F313A</color>
+    <color name="background_color">#FF000000</color>
 
     // editText's colors
     <color name="edit_text_background_color">#40424C</color>
@@ -27,6 +28,5 @@
 
     // Text color
     <color name="text_color_white">#FFFFFFFF</color>
-    <color name="text_color_black">#FF000000</color>
 
 </resources>

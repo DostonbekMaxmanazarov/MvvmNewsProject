@@ -56,7 +56,6 @@ class CategoryNewsAdapter : RecyclerView.Adapter<CategoryNewsAdapter.VH>() {
 
             binding.ivBookMark.setOnClickListener {
                 bookmarkListener?.invoke(mList[adapterPosition])
-                binding.ivBookMark.setImageResource(R.drawable.ic_bookmark_selected)
             }
         }
 

@@ -5,7 +5,7 @@
     android:textSize="16sp"
     android:text="@string/latest"
     android:paddingVertical="8dp"
-    android:textColor="@color/white"
+    android:textColor="@color/text_color_white"
     android:id="@+id/tvTitle"
     android:layout_marginEnd="8dp"
     android:textStyle="bold"

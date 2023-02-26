@@ -22,7 +22,7 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="@string/dummy_text"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color_white"
         android:textSize="16sp"
         android:typeface="serif"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/font_falling_sky"
         android:text="@string/name"
-        android:textColor="@color/text_color"
+        android:textColor="@color/text_color_white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/ivNewsPhoto"
         app:layout_constraintStart_toEndOf="@id/ivNewsPhoto" />
@@ -50,7 +50,7 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/font_falling_sky"
         android:text="@string/date_month"
-        android:textColor="@color/text_color"
+        android:textColor="@color/text_color_white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/ivNewsPhoto"
         app:layout_constraintEnd_toStartOf="@id/ivBookMark" />
