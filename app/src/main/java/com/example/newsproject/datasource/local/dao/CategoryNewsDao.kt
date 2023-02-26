@@ -10,11 +10,11 @@ import com.example.newsproject.util.Constants.CATEGORY_NEWS_TABLE
 @Dao
 interface CategoryNewsDao {
     @Query("SELECT * FROM $CATEGORY_NEWS_TABLE")
-    suspend fun getAllBreakingNews(): List<CategoryNewsEntity>
+    suspend fun getAllCategoryNews(): List<CategoryNewsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addBreakingNews(news: List<CategoryNewsEntity>)
+    suspend fun addCategoryNews(news: List<CategoryNewsEntity>)
 
     @Query("DELETE FROM $CATEGORY_NEWS_TABLE")
-    suspend fun deleteAllBreakingNews()
+    suspend fun deleteAllCategoryNews()
 }

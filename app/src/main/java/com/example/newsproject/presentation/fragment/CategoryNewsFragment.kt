@@ -149,7 +149,6 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_main) {
         binding.layoutExit.setOnClickListener {
             requireActivity().finish()
         }
-
     }
 
     private fun loadDataByViewModel() {

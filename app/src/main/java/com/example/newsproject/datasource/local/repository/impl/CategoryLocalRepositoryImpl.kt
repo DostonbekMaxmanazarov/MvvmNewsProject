@@ -10,11 +10,11 @@ class CategoryLocalRepositoryImpl @Inject constructor(
 ): ICategoryLocalRepository {
 
     override suspend fun getAllCategoryNews(): List<CategoryNewsEntity> =
-        breakingNewsDao.getAllBreakingNews()
+        breakingNewsDao.getAllCategoryNews()
 
     override suspend fun addCategoryNews(news: List<CategoryNewsEntity>) =
-        breakingNewsDao.addBreakingNews(news)
+        breakingNewsDao.addCategoryNews(news)
 
-    override suspend fun deleteAllBreakingNews() = breakingNewsDao.deleteAllBreakingNews()
+    override suspend fun deleteAllBreakingNews() = breakingNewsDao.deleteAllCategoryNews()
 
 }

@@ -22,21 +22,21 @@ class MapperModule {
     @CategoryNewsModuleMapper
     @Provides
     @Singleton
-    fun provideBreakingNewsMapper(): ISingleMapper<ArticleDataResponse, CategoryNewsModel> {
+    fun provideCategoryNewsMapper(): ISingleMapper<ArticleDataResponse, CategoryNewsModel> {
         return CategoryNewsMapper()
     }
 
     @CategoryNewsLocalModuleMapper
     @Provides
     @Singleton
-    fun provideBreakingNewsLocalMapper(): ISingleMapper<ArticleDataResponse, CategoryNewsEntity> {
+    fun provideCategoryNewsLocalMapper(): ISingleMapper<ArticleDataResponse, CategoryNewsEntity> {
         return CategoryNewsLocalMapper()
     }
 
     @ParseToCategoryNewsModuleMapper
     @Provides
     @Singleton
-    fun provideParseToBreakingNewsMapper(): ISingleMapper<CategoryNewsEntity, CategoryNewsModel> {
+    fun provideParseToCategoryNewsMapper(): ISingleMapper<CategoryNewsEntity, CategoryNewsModel> {
         return ParseToCategoryNewsMapper()
     }
 
