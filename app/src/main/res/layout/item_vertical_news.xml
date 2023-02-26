@@ -7,10 +7,10 @@
     android:background="@color/background_color">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivNewsPhoto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:id="@+id/ivNewsPhoto"
         android:src="@drawable/nature_photo" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -34,8 +34,17 @@
         android:fontFamily="@font/font_falling_sky"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivBookMark"
         tools:text="July 15, 2023" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBookMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_bookmark_white"
+        app:layout_constraintBottom_toBottomOf="@id/tvNewsDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvNewsDate" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvNewsTitle"

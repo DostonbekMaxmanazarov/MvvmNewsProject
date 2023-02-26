@@ -8,19 +8,25 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.newsproject.R
 import com.example.newsproject.databinding.ItemVerticalNewsBinding
-import com.example.newsproject.model.CategoryNewsItemModel
+import com.example.newsproject.model.CategoryNewsModel
 
 @SuppressLint("NotifyDataSetChanged")
-class VerticalNewsAdapter : RecyclerView.Adapter<VerticalNewsAdapter.VH>() {
+class VerticalCategoryNewsAdapter : RecyclerView.Adapter<VerticalCategoryNewsAdapter.VH>() {
 
     private lateinit var binding: ItemVerticalNewsBinding
 
-    private val mList = mutableListOf<CategoryNewsItemModel>()
+    private val mList = mutableListOf<CategoryNewsModel>()
 
-    private var listener: ((CategoryNewsItemModel) -> Unit)? = null
+    private var listener: ((CategoryNewsModel) -> Unit)? = null
 
-    fun setOnClickListener(listener: (CategoryNewsItemModel) -> Unit) {
+    fun setOnClickListener(listener: (CategoryNewsModel) -> Unit) {
         this.listener = listener
+    }
+
+    private var bookmarkListener: ((CategoryNewsModel) -> Unit)? = null
+
+    fun setOnClickBookmarkListener(listener: (CategoryNewsModel) -> Unit) {
+        this.bookmarkListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -33,7 +39,7 @@ class VerticalNewsAdapter : RecyclerView.Adapter<VerticalNewsAdapter.VH>() {
 
     override fun getItemCount() = mList.size
 
-    fun submitList(data: MutableList<CategoryNewsItemModel>) {
+    fun submitList(data: MutableList<CategoryNewsModel>) {
         mList.clear()
         mList.addAll(data)
         notifyDataSetChanged()
@@ -47,11 +53,15 @@ class VerticalNewsAdapter : RecyclerView.Adapter<VerticalNewsAdapter.VH>() {
             binding.root.setOnClickListener {
                 listener?.invoke(mList[adapterPosition])
             }
+
+            binding.ivBookMark.setOnClickListener {
+                bookmarkListener?.invoke(mList[adapterPosition])
+            }
         }
 
-        fun bind(data: CategoryNewsItemModel) {
+        fun bind(data: CategoryNewsModel) {
             binding.tvNewsName.text = data.name
-            binding.tvNewsTitle.text = data.description
+            binding.tvNewsTitle.text = data.title
             binding.tvNewsDate.text = data.publishedAt
 
             if (data.imageUrl?.isNotEmpty() == true) Glide.with(binding.root).load(data.imageUrl)

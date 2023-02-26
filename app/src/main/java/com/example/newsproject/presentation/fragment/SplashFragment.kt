@@ -14,7 +14,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             delay(4000)
-            replaceFragment(R.id.container,CategoryNewsFragment(), addToBackStack = true)
+            replaceFragment(R.id.container, CategoryNewsFragment(), addToBackStack = true)
         }
     }
 }

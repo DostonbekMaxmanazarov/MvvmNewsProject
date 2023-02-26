@@ -1,9 +1,9 @@
 package com.example.newsproject.domain.usecase
 
-import com.example.newsproject.model.SearchNewsItemModel
+import com.example.newsproject.model.SearchNewsModel
 
 interface ISearchingAddBookmarkUseCase {
     suspend operator fun invoke(
-        categoryNewsItemModel: SearchNewsItemModel
+        categoryNewsItemModel: SearchNewsModel
     )
 }

@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsproject.R
 import com.example.newsproject.databinding.FragmentVerticalNewsBinding
 import com.example.newsproject.datasource.utils.ResultEvent
-import com.example.newsproject.presentation.adapter.VerticalNewsAdapter
+import com.example.newsproject.presentation.adapter.VerticalCategoryNewsAdapter
 import com.example.newsproject.presentation.dialog.LoaderDialog
 import com.example.newsproject.presentation.vm.VerticalCategoryNewsViewModel
 import com.example.newsproject.util.Constants
 import com.example.newsproject.util.fullScreen
+import com.example.newsproject.util.snackBar
+import com.example.newsproject.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,7 +29,7 @@ class VerticalCategoryNewsFragment : Fragment(R.layout.fragment_vertical_news) {
 
     private val vm by viewModels<VerticalCategoryNewsViewModel>()
 
-    private var verticalNewsAdapter: VerticalNewsAdapter? = null
+    private var verticalNewsAdapter: VerticalCategoryNewsAdapter? = null
 
     private var loadingDialog: LoaderDialog? = null
 
@@ -45,7 +47,7 @@ class VerticalCategoryNewsFragment : Fragment(R.layout.fragment_vertical_news) {
     private fun initView() {
         categoryTitle = requireArguments().getString(Constants.CATEGORY_TITLE)
 
-        verticalNewsAdapter = VerticalNewsAdapter()
+        verticalNewsAdapter = VerticalCategoryNewsAdapter()
         binding.rv.adapter = verticalNewsAdapter
         binding.rv.layoutManager = LinearLayoutManager(requireContext())
 
@@ -77,8 +79,7 @@ class VerticalCategoryNewsFragment : Fragment(R.layout.fragment_vertical_news) {
                         loadingDialog = null
                     }
                 }
-                is ResultEvent.Error -> {}
-                is ResultEvent.Failure -> {}
+                is ResultEvent.Failure -> {data.message?.toast(requireContext())}
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -86,6 +87,11 @@ class VerticalCategoryNewsFragment : Fragment(R.layout.fragment_vertical_news) {
     private fun initClickView() {
         binding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        verticalNewsAdapter?.setOnClickBookmarkListener {
+            vm.addBookmarkNews(it)
+            "Saved".snackBar(binding.constraintLayout)
         }
     }
 

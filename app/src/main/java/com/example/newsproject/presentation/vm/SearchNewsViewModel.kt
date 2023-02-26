@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsproject.datasource.utils.ResultEvent
 import com.example.newsproject.domain.usecase.ISearchNewsUseCase
 import com.example.newsproject.domain.usecase.ISearchingAddBookmarkUseCase
-import com.example.newsproject.model.SearchNewsItemModel
+import com.example.newsproject.model.SearchNewsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -19,9 +19,9 @@ class SearchNewsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _newsStateFlow =
-        MutableStateFlow<ResultEvent<List<SearchNewsItemModel>>>(ResultEvent.Loading(true))
+        MutableStateFlow<ResultEvent<List<SearchNewsModel>>>(ResultEvent.Loading(true))
 
-    val newsStateFlow: StateFlow<ResultEvent<List<SearchNewsItemModel>>>
+    val newsStateFlow: StateFlow<ResultEvent<List<SearchNewsModel>>>
         get() = _newsStateFlow.asStateFlow()
 
     init {
@@ -39,7 +39,7 @@ class SearchNewsViewModel @Inject constructor(
         }
     }
 
-    fun addBookmarkNews(searchNewsItemModel: SearchNewsItemModel) {
+    fun addBookmarkNews(searchNewsItemModel: SearchNewsModel) {
         viewModelScope.launch {
             searchAddBookmarkUseCase(searchNewsItemModel)
         }

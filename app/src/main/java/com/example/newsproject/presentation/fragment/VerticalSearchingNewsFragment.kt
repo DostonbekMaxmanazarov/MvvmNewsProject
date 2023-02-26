@@ -15,6 +15,8 @@ import com.example.newsproject.presentation.dialog.LoaderDialog
 import com.example.newsproject.presentation.vm.VerticalSearchNewsViewModel
 import com.example.newsproject.util.Constants
 import com.example.newsproject.util.fullScreen
+import com.example.newsproject.util.snackBar
+import com.example.newsproject.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -77,8 +79,9 @@ class VerticalSearchingNewsFragment : Fragment(R.layout.fragment_vertical_search
                         loadingDialog = null
                     }
                 }
-                is ResultEvent.Error -> {}
-                is ResultEvent.Failure -> {}
+                is ResultEvent.Failure -> {
+                    data.message?.toast(requireContext())
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -86,6 +89,11 @@ class VerticalSearchingNewsFragment : Fragment(R.layout.fragment_vertical_search
     private fun initClickView() {
         binding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        verticalNewsAdapter?.setOnClickBookmarkListener {
+            vm.addBookmarkNews(it)
+            "Saved".snackBar(binding.constraintLayout)
         }
     }
 

@@ -17,6 +17,7 @@ import com.example.newsproject.presentation.dialog.LoaderDialog
 import com.example.newsproject.presentation.vm.SearchNewsViewModel
 import com.example.newsproject.util.Constants
 import com.example.newsproject.util.addFragment
+import com.example.newsproject.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -78,6 +79,11 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 addToBackStack = true
             )
         }
+
+        searchNewsAdapter.setOnClickBookmarkListener {
+            vm.addBookmarkNews(it)
+        }
+
     }
 
     private fun loadDataByViewModel() {
@@ -103,8 +109,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                         loadingDialog = null
                     }
                 }
-                is ResultEvent.Error -> {}
-                is ResultEvent.Failure -> {}
+                is ResultEvent.Failure -> {data.message?.toast(requireContext())}
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

@@ -11,7 +11,8 @@ interface NewsApi {
     @GET(TOP_HEADING)
     suspend fun getCategoryNews(
         @Query("category") category: String,
-        @Query("country") country: String = "us",
+        //@Query("country") country: String = "us",
+        @Query("sortBy") sortBy: String = "popularity",
         @Query("apiKey") apiKey: String = API_KEY
     ): ArticlesResponse
 

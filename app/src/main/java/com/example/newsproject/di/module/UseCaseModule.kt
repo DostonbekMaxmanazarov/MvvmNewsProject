@@ -9,16 +9,11 @@ import com.example.newsproject.datasource.remote.repository.ISearchRemoteReposit
 import com.example.newsproject.datasource.remote.response.ArticleDataResponse
 import com.example.newsproject.di.qualifier.*
 import com.example.newsproject.domain.mapper.ISingleMapper
-import com.example.newsproject.domain.usecase.ICategoryAddBookmarkUseCase
-import com.example.newsproject.domain.usecase.ICategoryNewsUseCase
-import com.example.newsproject.domain.usecase.ISearchNewsUseCase
-import com.example.newsproject.domain.usecase.ISearchingAddBookmarkUseCase
-import com.example.newsproject.domain.usecase.impl.CategoryAddBookmarkUseCaseImpl
-import com.example.newsproject.domain.usecase.impl.CategoryNewsUseCaseImpl
-import com.example.newsproject.domain.usecase.impl.SearchNewsUseCaseImpl
-import com.example.newsproject.domain.usecase.impl.SearchingAddBookmarkUseCaseImpl
-import com.example.newsproject.model.CategoryNewsItemModel
-import com.example.newsproject.model.SearchNewsItemModel
+import com.example.newsproject.domain.usecase.*
+import com.example.newsproject.domain.usecase.impl.*
+import com.example.newsproject.model.BookmarkNewsModel
+import com.example.newsproject.model.CategoryNewsModel
+import com.example.newsproject.model.SearchNewsModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,44 +29,45 @@ class UseCaseModule {
     fun provideCategoryNewsUseCase(
         remoteRepository: ICategoryRemoteRepository,
         localRepository: ICategoryLocalRepository,
-        @CategoryNewsModuleMapper categoryNewsRemoteMapper: ISingleMapper<ArticleDataResponse, CategoryNewsItemModel>,
+        @CategoryNewsModuleMapper categoryNewsRemoteMapper: ISingleMapper<ArticleDataResponse, CategoryNewsModel>,
         @CategoryNewsLocalModuleMapper categoryNewsLocalMapper: ISingleMapper<ArticleDataResponse, CategoryNewsEntity>,
-        @ParseToCategoryNewsModuleMapper parseToCategoryNewsLocalMapper: ISingleMapper<CategoryNewsEntity, CategoryNewsItemModel>
     ): ICategoryNewsUseCase = CategoryNewsUseCaseImpl(
-        remoteRepository,
-        localRepository,
-        categoryNewsRemoteMapper,
-        categoryNewsLocalMapper,
-        parseToCategoryNewsLocalMapper
+        remoteRepository, localRepository, categoryNewsRemoteMapper, categoryNewsLocalMapper
     )
 
     @Provides
     @Singleton
     fun provideSearchNewsUseCase(
         remoteRepository: ISearchRemoteRepository,
-        @SearchNewsModuleMapper searchNewsRemoteMapper: ISingleMapper<ArticleDataResponse, SearchNewsItemModel>,
+        @SearchNewsModuleMapper searchNewsRemoteMapper: ISingleMapper<ArticleDataResponse, SearchNewsModel>,
     ): ISearchNewsUseCase = SearchNewsUseCaseImpl(
-        remoteRepository,
-        searchNewsRemoteMapper
+        remoteRepository, searchNewsRemoteMapper
     )
 
     @Provides
     @Singleton
     fun provideSearchAddBookmarkUseCase(
         localRepository: IBookmarkLocalRepository,
-        @SearchingBookmarkLocalModuleMapper searchBookmarkMapper: ISingleMapper<SearchNewsItemModel, BookmarkNewsEntity>,
+        @SearchingBookmarkLocalModuleMapper searchBookmarkMapper: ISingleMapper<SearchNewsModel, BookmarkNewsEntity>,
     ): ISearchingAddBookmarkUseCase = SearchingAddBookmarkUseCaseImpl(
-        localRepository,
-        searchBookmarkMapper
+        localRepository, searchBookmarkMapper
     )
 
     @Provides
     @Singleton
     fun provideCategoryAddBookmarkUseCase(
         localRepository: IBookmarkLocalRepository,
-        @CategoryBookmarkLocalModuleMapper searchBookmarkMapper: ISingleMapper<CategoryNewsItemModel, BookmarkNewsEntity>,
+        @CategoryBookmarkLocalModuleMapper searchBookmarkMapper: ISingleMapper<CategoryNewsModel, BookmarkNewsEntity>,
     ): ICategoryAddBookmarkUseCase = CategoryAddBookmarkUseCaseImpl(
-        localRepository,
-        searchBookmarkMapper
+        localRepository, searchBookmarkMapper
+    )
+
+    @Provides
+    @Singleton
+    fun provideGetAllBookmarkNewsUseCase(
+        localRepository: IBookmarkLocalRepository,
+        @BookmarkModuleMapper bookmarkNewsMapper: ISingleMapper<BookmarkNewsEntity, BookmarkNewsModel>,
+    ): IGetAllBookmarkNewsUseCase = GetAllBookmarkNewsUseCaseImpl(
+        localRepository, bookmarkNewsMapper
     )
 }

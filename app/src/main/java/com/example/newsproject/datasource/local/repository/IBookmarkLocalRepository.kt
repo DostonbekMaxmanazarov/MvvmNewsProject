@@ -4,11 +4,11 @@ import com.example.newsproject.datasource.local.entity.BookmarkNewsEntity
 
 interface IBookmarkLocalRepository {
 
-    suspend fun getAllCategoryBookmarkNews(): List<BookmarkNewsEntity>
+    suspend fun getAllBookmarkNews(): List<BookmarkNewsEntity>
 
-    suspend fun addCategoryBookmarksNews(news: List<BookmarkNewsEntity>)
+    suspend fun addBookmarksNews(news: List<BookmarkNewsEntity>)
 
-    suspend fun addBookmarkNews(news: BookmarkNewsEntity)
+    suspend fun addBookmarkNews(news: BookmarkNewsEntity):Long
 
-    suspend fun deleteAllBreakingNews()
+    suspend fun deleteAllBookmarkNews()
 }

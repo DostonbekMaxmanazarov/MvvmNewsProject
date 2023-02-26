@@ -3,6 +3,7 @@ package com.example.newsproject.presentation.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,37 +13,37 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.newsproject.R
 import com.example.newsproject.databinding.FragmentCategoryNewsBinding
+import com.example.newsproject.databinding.FragmentMainBinding
 import com.example.newsproject.datasource.utils.ResultEvent
 import com.example.newsproject.model.CategoriesTabModel
-import com.example.newsproject.model.CategoryNewsItemModel
+import com.example.newsproject.model.CategoryNewsModel
 import com.example.newsproject.presentation.adapter.CategoryNewsAdapter
 import com.example.newsproject.presentation.adapter.CategoryTabAdapter
 import com.example.newsproject.presentation.dialog.LoaderDialog
 import com.example.newsproject.presentation.vm.CategoriesNewsViewModel
-import com.example.newsproject.util.Constants
-import com.example.newsproject.util.addFragment
-import com.example.newsproject.util.replaceFragment
+import com.example.newsproject.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class CategoryNewsFragment : Fragment(R.layout.fragment_category_news) {
+class CategoryNewsFragment : Fragment(R.layout.fragment_main) {
 
     private val vm by viewModels<CategoriesNewsViewModel>()
 
-    private var _binding: FragmentCategoryNewsBinding? = null
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+    private lateinit var bindingCategory: FragmentCategoryNewsBinding
 
     private var loadingDialog: LoaderDialog? = null
 
     private lateinit var categoryNewsAdapter: CategoryNewsAdapter
     private lateinit var categoryTitleAdapter: CategoryTabAdapter
 
-    private var categories = mutableListOf<CategoryNewsItemModel>()
+    private var categories = mutableListOf<CategoryNewsModel>()
     private var categoryTitle: String = ""
 
-    private var categoryNewsModel: CategoryNewsItemModel? = null
+    private var categoryNewsModel: CategoryNewsModel? = null
 
     private val categoriesTitle = listOf(
         CategoriesTabModel("Business"),
@@ -55,7 +56,8 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_category_news) {
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentCategoryNewsBinding.bind(view)
+        _binding = FragmentMainBinding.bind(view)
+        bindingCategory = _binding!!.fragmentCategoryNews
         super.onViewCreated(view, savedInstanceState)
         initView()
         loadDataByViewModel()
@@ -69,7 +71,7 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_category_news) {
         categoryTitleAdapter = CategoryTabAdapter()
         categoryNewsAdapter = CategoryNewsAdapter()
 
-        binding.apply {
+        bindingCategory.apply {
             rv.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             rv.adapter = categoryNewsAdapter
@@ -90,7 +92,11 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_category_news) {
             categoryTitle = categoryItem.title
         }
 
-        binding.fab.setOnClickListener {
+        bindingCategory.ivNavigation.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        bindingCategory.fab.setOnClickListener {
             addFragment(
                 containerId = R.id.container,
                 fragment = VerticalCategoryNewsFragment(),
@@ -99,14 +105,14 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_category_news) {
             )
         }
 
-        binding.etSearch.setOnClickListener {
+        bindingCategory.etSearch.setOnClickListener {
             replaceFragment(R.id.container, SearchNewsFragment(), addToBackStack = true)
         }
 
         categoryNewsAdapter.setOnClickListener {
             addFragment(
                 R.id.container,
-                DetailNewsFragment(),
+                CategoryDetailNewsFragment(),
                 bundleOf(Constants.CATEGORY_DETAIL_NEWS to it),
                 true
             )
@@ -114,16 +120,41 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_category_news) {
 
         categoryNewsAdapter.setOnClickBookmarkListener {
             vm.addBookmarkNews(it)
+            "Saved".snackBar(bindingCategory.constraint)
         }
 
-        binding.ivNewsPhoto.setOnClickListener {
+        bindingCategory.ivNewsPhoto.setOnClickListener {
             addFragment(
                 R.id.container,
-                DetailNewsFragment(),
+                CategoryDetailNewsFragment(),
                 bundleOf(Constants.CATEGORY_DETAIL_NEWS to categoryNewsModel),
                 true
             )
         }
+
+        bindingCategory.ivBookMark.setOnClickListener {
+            categoryNewsModel?.let { categoryModel -> vm.addBookmarkNews(categoryModel) }
+            "Saved".snackBar(bindingCategory.constraint)
+        }
+
+        binding.layoutBookmark.setOnClickListener {
+            addFragment(R.id.container, BookmarkNewsFragment(), addToBackStack = true)
+        }
+
+        binding.layoutHistory.setOnClickListener {
+            addFragment(R.id.container, HistoryFragment(), addToBackStack = true)
+
+        }
+
+        binding.layoutSettings.setOnClickListener {
+            addFragment(R.id.container, SettingsFragment(), addToBackStack = true)
+
+        }
+
+        binding.layoutExit.setOnClickListener {
+            requireActivity().finish()
+        }
+
     }
 
     private fun loadDataByViewModel() {
@@ -153,21 +184,20 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_category_news) {
                         loadingDialog = null
                     }
                 }
-                is ResultEvent.Error -> {}
-                is ResultEvent.Failure -> {}
+                is ResultEvent.Failure -> {data.message?.toast(requireContext())}
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun setTopCategoryNews(item: CategoryNewsItemModel) {
+    private fun setTopCategoryNews(item: CategoryNewsModel) {
         if (item.imageUrl?.isNotEmpty() == true) Glide.with(requireContext()).load(item.imageUrl)
             .placeholder(R.drawable.ic_place_holder)
-            .transition(DrawableTransitionOptions.withCrossFade()).into(binding.ivNewsPhoto)
-        else binding.ivNewsPhoto.setImageResource(R.drawable.nature_photo)
+            .transition(DrawableTransitionOptions.withCrossFade()).into(bindingCategory.ivNewsPhoto)
+        else bindingCategory.ivNewsPhoto.setImageResource(R.drawable.nature_photo)
 
-        binding.tvDate.text = item.publishedAt
-        binding.tvName.text = item.name
-        binding.tvTitle.text = item.title
+        bindingCategory.tvDate.text = item.publishedAt
+        bindingCategory.tvName.text = item.name
+        bindingCategory.tvTitle.text = item.title
     }
 
     override fun onDestroy() {

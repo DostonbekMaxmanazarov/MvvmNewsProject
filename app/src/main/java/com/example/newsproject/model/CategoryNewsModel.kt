@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CategoryNewsItemModel(
+data class CategoryNewsModel(
     val name: String? = null,
     val title: String? = null,
     val imageUrl: String? = null,

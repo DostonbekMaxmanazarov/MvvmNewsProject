@@ -8,14 +8,14 @@ import javax.inject.Inject
 class BookmarkLocalRepositoryImpl @Inject constructor(
     private val bookmarkNewsDao: BookmarkNewsDao
 ) : IBookmarkLocalRepository {
-    override suspend fun getAllCategoryBookmarkNews(): List<BookmarkNewsEntity> =
+    override suspend fun getAllBookmarkNews(): List<BookmarkNewsEntity> =
         bookmarkNewsDao.getAllBookmarkNews()
 
-    override suspend fun addCategoryBookmarksNews(news: List<BookmarkNewsEntity>) =
+    override suspend fun addBookmarksNews(news: List<BookmarkNewsEntity>) =
         bookmarkNewsDao.addBookmarksNews(news)
 
-    override suspend fun addBookmarkNews(news: BookmarkNewsEntity) =
+    override suspend fun addBookmarkNews(news: BookmarkNewsEntity):Long =
         bookmarkNewsDao.addBookmarkNews(news)
 
-    override suspend fun deleteAllBreakingNews() = bookmarkNewsDao.deleteAllBookmarkNews()
+    override suspend fun deleteAllBookmarkNews() = bookmarkNewsDao.deleteAllBookmarkNews()
 }

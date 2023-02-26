@@ -5,8 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsproject.domain.usecase.ICategoryNewsUseCase
 import com.example.newsproject.datasource.utils.ResultEvent
 import com.example.newsproject.domain.usecase.ICategoryAddBookmarkUseCase
-import com.example.newsproject.model.CategoryNewsItemModel
-import com.example.newsproject.model.SearchNewsItemModel
+import com.example.newsproject.model.CategoryNewsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -20,9 +19,9 @@ class CategoriesNewsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _newsStateFlow =
-        MutableStateFlow<ResultEvent<List<CategoryNewsItemModel>>>(ResultEvent.Loading(true))
+        MutableStateFlow<ResultEvent<List<CategoryNewsModel>>>(ResultEvent.Loading(true))
 
-    val newsStateFlow: StateFlow<ResultEvent<List<CategoryNewsItemModel>>>
+    val newsStateFlow: StateFlow<ResultEvent<List<CategoryNewsModel>>>
         get() = _newsStateFlow.asStateFlow()
 
     fun getTopStories(isLoadingLocal: Boolean = false, category: String = "") {
@@ -35,7 +34,7 @@ class CategoriesNewsViewModel @Inject constructor(
         }
     }
 
-    fun addBookmarkNews(categoryNewsItemModel: CategoryNewsItemModel) {
+    fun addBookmarkNews(categoryNewsItemModel: CategoryNewsModel) {
         viewModelScope.launch {
             categoryAddBookmarkUseCase(categoryNewsItemModel)
         }

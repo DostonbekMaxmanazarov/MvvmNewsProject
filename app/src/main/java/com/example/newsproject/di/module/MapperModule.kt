@@ -6,8 +6,9 @@ import com.example.newsproject.datasource.remote.response.ArticleDataResponse
 import com.example.newsproject.di.qualifier.*
 import com.example.newsproject.domain.mapper.ISingleMapper
 import com.example.newsproject.domain.mapper.impl.*
-import com.example.newsproject.model.CategoryNewsItemModel
-import com.example.newsproject.model.SearchNewsItemModel
+import com.example.newsproject.model.BookmarkNewsModel
+import com.example.newsproject.model.CategoryNewsModel
+import com.example.newsproject.model.SearchNewsModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,7 @@ class MapperModule {
     @CategoryNewsModuleMapper
     @Provides
     @Singleton
-    fun provideBreakingNewsMapper(): ISingleMapper<ArticleDataResponse, CategoryNewsItemModel> {
+    fun provideBreakingNewsMapper(): ISingleMapper<ArticleDataResponse, CategoryNewsModel> {
         return CategoryNewsMapper()
     }
 
@@ -35,28 +36,35 @@ class MapperModule {
     @ParseToCategoryNewsModuleMapper
     @Provides
     @Singleton
-    fun provideParseToBreakingNewsMapper(): ISingleMapper<CategoryNewsEntity, CategoryNewsItemModel> {
+    fun provideParseToBreakingNewsMapper(): ISingleMapper<CategoryNewsEntity, CategoryNewsModel> {
         return ParseToCategoryNewsMapper()
     }
 
     @SearchNewsModuleMapper
     @Provides
     @Singleton
-    fun provideSearchNewsMapper(): ISingleMapper<ArticleDataResponse, SearchNewsItemModel> {
+    fun provideSearchNewsMapper(): ISingleMapper<ArticleDataResponse, SearchNewsModel> {
         return SearchNewsMapper()
     }
 
     @CategoryBookmarkLocalModuleMapper
     @Provides
     @Singleton
-    fun provideCategoryBookmarkNewsLocalMapper(): ISingleMapper<CategoryNewsItemModel, BookmarkNewsEntity> {
+    fun provideCategoryBookmarkNewsLocalMapper(): ISingleMapper<CategoryNewsModel, BookmarkNewsEntity> {
         return CategoryBookmarkNewsLocalMapper()
     }
 
     @SearchingBookmarkLocalModuleMapper
     @Provides
     @Singleton
-    fun provideSearchingBookmarkNewsLocalMapper(): ISingleMapper<SearchNewsItemModel, BookmarkNewsEntity> {
+    fun provideSearchingBookmarkNewsLocalMapper(): ISingleMapper<SearchNewsModel, BookmarkNewsEntity> {
         return SearchingBookmarkNewsLocalMapper()
+    }
+
+    @BookmarkModuleMapper
+    @Provides
+    @Singleton
+    fun provideBookmarkNewsMapper(): ISingleMapper<BookmarkNewsEntity, BookmarkNewsModel> {
+        return BookmarkNewsModelMapper()
     }
 }

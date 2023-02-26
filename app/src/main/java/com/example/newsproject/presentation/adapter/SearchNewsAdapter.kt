@@ -8,20 +8,25 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.newsproject.R
 import com.example.newsproject.databinding.ItemSearchNewsBinding
-import com.example.newsproject.databinding.ItemVerticalNewsBinding
-import com.example.newsproject.model.SearchNewsItemModel
+import com.example.newsproject.model.SearchNewsModel
 
 @SuppressLint("NotifyDataSetChanged")
 class SearchNewsAdapter : RecyclerView.Adapter<SearchNewsAdapter.VH>() {
 
     private lateinit var binding: ItemSearchNewsBinding
 
-    private val mList = mutableListOf<SearchNewsItemModel>()
+    private val mList = mutableListOf<SearchNewsModel>()
 
-    private var listener: ((SearchNewsItemModel) -> Unit)? = null
+    private var listener: ((SearchNewsModel) -> Unit)? = null
 
-    fun setOnClickListener(listener: (SearchNewsItemModel) -> Unit) {
+    fun setOnClickListener(listener: (SearchNewsModel) -> Unit) {
         this.listener = listener
+    }
+
+    private var bookmarkListener: ((SearchNewsModel) -> Unit)? = null
+
+    fun setOnClickBookmarkListener(listener: (SearchNewsModel) -> Unit) {
+        this.bookmarkListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -34,7 +39,7 @@ class SearchNewsAdapter : RecyclerView.Adapter<SearchNewsAdapter.VH>() {
 
     override fun getItemCount() = mList.size
 
-    fun submitList(data: MutableList<SearchNewsItemModel>) {
+    fun submitList(data: MutableList<SearchNewsModel>) {
         mList.clear()
         mList.addAll(data)
         notifyDataSetChanged()
@@ -48,16 +53,19 @@ class SearchNewsAdapter : RecyclerView.Adapter<SearchNewsAdapter.VH>() {
             binding.root.setOnClickListener {
                 listener?.invoke(mList[adapterPosition])
             }
+
+            binding.ivBookmark.setOnClickListener {
+                bookmarkListener?.invoke(mList[adapterPosition])
+            }
         }
 
-        fun bind(data: SearchNewsItemModel) {
+        fun bind(data: SearchNewsModel) {
             binding.tvName.text = data.name
             binding.tvTitle.text = data.title
             binding.tvDate.text = data.publishedAt
 
             Glide.with(binding.root).load(data.imageUrl).placeholder(R.drawable.ic_place_holder)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.ivNews)
+                .transition(DrawableTransitionOptions.withCrossFade()).into(binding.ivNews)
         }
     }
 }

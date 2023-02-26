@@ -16,7 +16,7 @@ interface BookmarkNewsDao {
     suspend fun addBookmarksNews(news: List<BookmarkNewsEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addBookmarkNews(news: BookmarkNewsEntity)
+    suspend fun addBookmarkNews(news: BookmarkNewsEntity):Long
 
     @Query("DELETE FROM $BOOKMARK_NEWS_TABLE")
     suspend fun deleteAllBookmarkNews()

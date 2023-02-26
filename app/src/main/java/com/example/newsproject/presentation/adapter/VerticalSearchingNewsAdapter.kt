@@ -8,20 +8,25 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.newsproject.R
 import com.example.newsproject.databinding.ItemVerticalNewsBinding
-import com.example.newsproject.model.CategoryNewsItemModel
-import com.example.newsproject.model.SearchNewsItemModel
+import com.example.newsproject.model.SearchNewsModel
 
 @SuppressLint("NotifyDataSetChanged")
 class VerticalSearchingNewsAdapter : RecyclerView.Adapter<VerticalSearchingNewsAdapter.VH>() {
 
     private lateinit var binding: ItemVerticalNewsBinding
 
-    private val mList = mutableListOf<SearchNewsItemModel>()
+    private val mList = mutableListOf<SearchNewsModel>()
 
-    private var listener: ((SearchNewsItemModel) -> Unit)? = null
+    private var listener: ((SearchNewsModel) -> Unit)? = null
 
-    fun setOnClickListener(listener: (SearchNewsItemModel) -> Unit) {
+    fun setOnClickListener(listener: (SearchNewsModel) -> Unit) {
         this.listener = listener
+    }
+
+    private var bookmarkListener: ((SearchNewsModel) -> Unit)? = null
+
+    fun setOnClickBookmarkListener(listener: (SearchNewsModel) -> Unit) {
+        this.bookmarkListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -34,7 +39,7 @@ class VerticalSearchingNewsAdapter : RecyclerView.Adapter<VerticalSearchingNewsA
 
     override fun getItemCount() = mList.size
 
-    fun submitList(data: MutableList<SearchNewsItemModel>) {
+    fun submitList(data: MutableList<SearchNewsModel>) {
         mList.clear()
         mList.addAll(data)
         notifyDataSetChanged()
@@ -48,9 +53,13 @@ class VerticalSearchingNewsAdapter : RecyclerView.Adapter<VerticalSearchingNewsA
             binding.root.setOnClickListener {
                 listener?.invoke(mList[adapterPosition])
             }
+
+            binding.ivBookMark.setOnClickListener {
+                bookmarkListener?.invoke(mList[adapterPosition])
+            }
         }
 
-        fun bind(data: SearchNewsItemModel) {
+        fun bind(data: SearchNewsModel) {
             binding.tvNewsName.text = data.name
             binding.tvNewsTitle.text = data.title
             binding.tvNewsDate.text = data.publishedAt

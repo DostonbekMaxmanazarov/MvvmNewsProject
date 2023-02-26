@@ -16,7 +16,7 @@ data class ArticleDataResponse(
     val author: String? = null,
     val title: String? = null,
     val urlToImage: String? = null,
-    @SerialName("description") val description: String? = null,
+    @SerialName("content") val description: String? = null,
     @Serializable(with = DateSerializer.Nullable::class) val publishedAt: Date? = null
 )
 

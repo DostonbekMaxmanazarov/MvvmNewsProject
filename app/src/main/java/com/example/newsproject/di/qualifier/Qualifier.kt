@@ -25,3 +25,7 @@ annotation class CategoryBookmarkLocalModuleMapper
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class SearchingBookmarkLocalModuleMapper
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class BookmarkModuleMapper
