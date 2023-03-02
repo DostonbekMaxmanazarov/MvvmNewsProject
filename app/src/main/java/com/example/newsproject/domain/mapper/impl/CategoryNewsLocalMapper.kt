@@ -3,7 +3,7 @@ package com.example.newsproject.domain.mapper.impl
 import com.example.newsproject.datasource.local.entity.CategoryNewsEntity
 import com.example.newsproject.datasource.remote.response.ArticleDataResponse
 import com.example.newsproject.domain.mapper.ISingleMapper
-import com.example.newsproject.util.toDateFormatted
+import com.example.newsproject.util.extension.toDateFormatted
 
 class CategoryNewsLocalMapper : ISingleMapper<ArticleDataResponse, CategoryNewsEntity> {
     override fun invoke(value: ArticleDataResponse): CategoryNewsEntity = CategoryNewsEntity(

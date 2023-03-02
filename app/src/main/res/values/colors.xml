@@ -10,14 +10,15 @@
     <color name="transparent">#00000000</color>
 
     // background colors
-    <color name="background_color">#2F313A</color>
+    <color name="background_color">#FFFFFF</color>
 
     // editText's colors
-    <color name="edit_text_background_color">#40424C</color>
+    <color name="edit_text_background_color">#ECECEF</color>
+    <color name="edit_text_stroke_color">#60636E</color>
     <color name="edit_text_hint_color">#777880</color>
 
     // text color
-    <color name="text_color">#D1D1D3</color>
+    <color name="text_color">#222225</color>
 
     // loader color
     <color name="loader_color">#52DCFF</color>
@@ -26,7 +27,16 @@
     <color name="floating_color">#495461</color>
 
     // Text color
-    <color name="text_color_white">#FFFFFFFF</color>
+    <color name="text_color_white">#222225</color>
     <color name="text_color_black">#FF000000</color>
+
+    // image color
+    <color name="image_nav_color">#FF000000</color>
+    <color name="icon_search_color">#40424C</color>
+    <color name="icon_bookmark_color">#FF000000</color>
+    <color name="icon_back_color">#FF000000</color>
+    <color name="icon_tint_color">#FFFFFF</color>
+
+
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.newsproject.util
+package com.example.newsproject.util.extension
 
 import android.content.Context
 import android.graphics.Color

@@ -7,16 +7,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.newsproject.R
 import com.example.newsproject.databinding.FragmentVerticalNewsBinding
 import com.example.newsproject.datasource.utils.ResultEvent
 import com.example.newsproject.presentation.adapter.VerticalCategoryNewsAdapter
 import com.example.newsproject.presentation.dialog.LoaderDialog
 import com.example.newsproject.presentation.vm.VerticalCategoryNewsViewModel
-import com.example.newsproject.util.Constants
-import com.example.newsproject.util.fullScreen
-import com.example.newsproject.util.snackBar
-import com.example.newsproject.util.toast
+import com.example.newsproject.util.*
+import com.example.newsproject.util.extension.fullScreen
+import com.example.newsproject.util.extension.snackBar
+import com.example.newsproject.util.extension.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -44,12 +45,20 @@ class VerticalCategoryNewsFragment : Fragment(R.layout.fragment_vertical_news) {
         initClickView()
     }
 
+    override fun onPause() {
+        super.onPause() //clearFlags()
+    }
+
     private fun initView() {
         categoryTitle = requireArguments().getString(Constants.CATEGORY_TITLE)
 
+        val snapHelper = LinearSnapHelper()
         verticalNewsAdapter = VerticalCategoryNewsAdapter()
+
         binding.rv.adapter = verticalNewsAdapter
         binding.rv.layoutManager = LinearLayoutManager(requireContext())
+
+        snapHelper.attachToRecyclerView(binding.rv)
 
         categoryTitle?.let {
             vm.getTopStories(category = it)
@@ -79,7 +88,23 @@ class VerticalCategoryNewsFragment : Fragment(R.layout.fragment_vertical_news) {
                         loadingDialog = null
                     }
                 }
-                is ResultEvent.Failure -> {data.message?.toast(requireContext())}
+                is ResultEvent.Failure -> {
+                    data.message?.toast(requireContext())
+                }
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        vm.bookmarkStateFlow.onEach { data ->
+            when (data) {
+                is ResultEvent.Success -> {
+                    if (data.data) "Saved".snackBar(binding.constraintLayout)
+
+                }
+                is ResultEvent.Loading -> {
+                }
+                is ResultEvent.Failure -> {
+                    data.message?.snackBar(binding.constraintLayout)
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -91,7 +116,6 @@ class VerticalCategoryNewsFragment : Fragment(R.layout.fragment_vertical_news) {
 
         verticalNewsAdapter?.setOnClickBookmarkListener {
             vm.addBookmarkNews(it)
-            "Saved".snackBar(binding.constraintLayout)
         }
     }
 

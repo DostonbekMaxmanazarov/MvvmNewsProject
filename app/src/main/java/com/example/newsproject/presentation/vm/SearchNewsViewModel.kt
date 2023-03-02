@@ -7,7 +7,6 @@ import com.example.newsproject.domain.usecase.ISearchNewsUseCase
 import com.example.newsproject.domain.usecase.ISearchingAddBookmarkUseCase
 import com.example.newsproject.model.SearchNewsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,29 +18,31 @@ class SearchNewsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _newsStateFlow =
-        MutableStateFlow<ResultEvent<List<SearchNewsModel>>>(ResultEvent.Loading(true))
+        MutableStateFlow<ResultEvent<List<SearchNewsModel>>>(ResultEvent.Success(emptyList()))
 
     val newsStateFlow: StateFlow<ResultEvent<List<SearchNewsModel>>>
         get() = _newsStateFlow.asStateFlow()
 
-    init {
-        getTopStories()
-    }
+    private val _bookmarkStateFlow =
+        MutableStateFlow<ResultEvent<Boolean>>(ResultEvent.Success(false))
+
+    val bookmarkStateFlow: StateFlow<ResultEvent<Boolean>>
+        get() = _bookmarkStateFlow.asStateFlow()
+
 
     fun getTopStories(searchText: String = "All") {
 
         viewModelScope.launch {
             _newsStateFlow.emit(ResultEvent.Loading(true))
-            delay(300)
-            _newsStateFlow.emit(searchNewsUseCaseImpl.invoke(searchText.ifEmpty { "All" }))
-            delay(300)
+            _newsStateFlow.emit(searchNewsUseCaseImpl(searchText.ifEmpty { "All" }))
             _newsStateFlow.emit(ResultEvent.Loading(false))
+
         }
     }
 
     fun addBookmarkNews(searchNewsItemModel: SearchNewsModel) {
         viewModelScope.launch {
-            searchAddBookmarkUseCase(searchNewsItemModel)
+            _bookmarkStateFlow.emit(searchAddBookmarkUseCase(searchNewsItemModel))
         }
     }
 }

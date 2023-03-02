@@ -13,7 +13,7 @@ import com.example.newsproject.datasource.utils.ResultEvent
 import com.example.newsproject.presentation.adapter.BookmarkNewsAdapter
 import com.example.newsproject.presentation.dialog.LoaderDialog
 import com.example.newsproject.presentation.vm.BookmarkNewsViewModel
-import com.example.newsproject.util.toast
+import com.example.newsproject.util.extension.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -49,6 +49,10 @@ class BookmarkNewsFragment : Fragment(R.layout.fragment_bookmark_news) {
     private fun initClickView() {
         binding.ivBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        bookmarkNewsAdapter.setOnClickListener {
+            vm.deleteBookmark(it.id)
         }
     }
 

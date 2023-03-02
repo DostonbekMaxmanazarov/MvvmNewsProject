@@ -70,4 +70,12 @@ class UseCaseModule {
     ): IGetAllBookmarkNewsUseCase = GetAllBookmarkNewsUseCaseImpl(
         localRepository, bookmarkNewsMapper
     )
+
+    @Provides
+    @Singleton
+    fun provideDeleteBookmarkNewsUseCase(
+        localRepository: IBookmarkLocalRepository,
+    ): IDeleteBookmarkNewsUseCase = DeleteBookmarkNewsUseCaseImpl(
+        localRepository
+    )
 }

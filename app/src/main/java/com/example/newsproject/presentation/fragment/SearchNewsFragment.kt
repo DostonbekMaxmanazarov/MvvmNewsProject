@@ -2,8 +2,8 @@ package com.example.newsproject.presentation.fragment
 
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.newsproject.R
 import com.example.newsproject.databinding.FragmentSearchNewsBinding
 import com.example.newsproject.datasource.utils.ResultEvent
+import com.example.newsproject.domain.enum.MessageType
 import com.example.newsproject.presentation.adapter.SearchNewsAdapter
 import com.example.newsproject.presentation.dialog.LoaderDialog
 import com.example.newsproject.presentation.vm.SearchNewsViewModel
 import com.example.newsproject.util.Constants
-import com.example.newsproject.util.addFragment
-import com.example.newsproject.util.toast
+import com.example.newsproject.util.extension.addFragment
+import com.example.newsproject.util.extension.snackBar
+import com.example.newsproject.util.extension.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -55,13 +57,6 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        binding.appBarLayout.etSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                vm.getTopStories(searchText = binding.appBarLayout.etSearch.text.toString())
-            }
-            true
-        }
-
         binding.fab.setOnClickListener {
             addFragment(
                 R.id.container,
@@ -69,6 +64,10 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 bundleOf(Constants.SEARCH_TEXT_NEWS to binding.appBarLayout.etSearch.text.toString()),
                 true
             )
+        }
+
+        binding.appBarLayout.etSearch.addTextChangedListener {
+            vm.getTopStories(it.toString())
         }
 
         searchNewsAdapter.setOnClickListener {
@@ -83,14 +82,18 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         searchNewsAdapter.setOnClickBookmarkListener {
             vm.addBookmarkNews(it)
         }
-
     }
 
     private fun loadDataByViewModel() {
         vm.newsStateFlow.onEach { data ->
             when (data) {
                 is ResultEvent.Success -> {
-                    searchNewsAdapter.submitList(data.data.toMutableList())
+                    if (data.data.isNotEmpty()) {
+                        searchNewsAdapter.submitList(data.data.toMutableList())
+                        binding.rv.visibility = View.VISIBLE
+                        binding.fab.visibility = View.VISIBLE
+                        binding.tvWriteToSearch.visibility = View.GONE
+                    }
                 }
                 is ResultEvent.Loading -> {
                     if (data.isLoading) {
@@ -109,7 +112,31 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                         loadingDialog = null
                     }
                 }
-                is ResultEvent.Failure -> {data.message?.toast(requireContext())}
+                is ResultEvent.Failure -> {
+                    if (data.message == MessageType.EMPTY_DATA.message) {
+                        binding.fab.visibility = View.GONE
+                        binding.rv.visibility = View.GONE
+                        binding.tvWriteToSearch.visibility = View.VISIBLE
+                        binding.tvWriteToSearch.text = "no information found"
+                    } else {
+                        data.message?.toast(
+                            requireContext()
+                        )
+                    }
+                }
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        vm.bookmarkStateFlow.onEach { data ->
+            when (data) {
+                is ResultEvent.Success -> {
+                    if (data.data) "Saved".snackBar(binding.constraintLayout)
+                }
+                is ResultEvent.Loading -> {
+                }
+                is ResultEvent.Failure -> {
+                    data.message?.snackBar(binding.constraintLayout)
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

@@ -1,7 +1,8 @@
-package com.example.newsproject.util
+package com.example.newsproject.util.extension
 
 import android.graphics.Color
 import android.view.View
+import android.view.WindowManager
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 
@@ -14,4 +15,9 @@ fun Fragment.fullScreen() {
             isAppearanceLightStatusBars = false
             isAppearanceLightNavigationBars = false
         }
+}
+
+fun Fragment.clearFlags() {
+    requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE;
 }

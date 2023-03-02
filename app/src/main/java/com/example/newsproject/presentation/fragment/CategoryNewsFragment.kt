@@ -22,6 +22,10 @@ import com.example.newsproject.presentation.adapter.CategoryTabAdapter
 import com.example.newsproject.presentation.dialog.LoaderDialog
 import com.example.newsproject.presentation.vm.CategoriesNewsViewModel
 import com.example.newsproject.util.*
+import com.example.newsproject.util.extension.addFragment
+import com.example.newsproject.util.extension.replaceFragment
+import com.example.newsproject.util.extension.snackBar
+import com.example.newsproject.util.extension.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -120,7 +124,6 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_main) {
 
         categoryNewsAdapter.setOnClickBookmarkListener {
             vm.addBookmarkNews(it)
-            "Saved".snackBar(bindingCategory.constraint)
         }
 
         bindingCategory.ivNewsPhoto.setOnClickListener {
@@ -143,7 +146,6 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_main) {
 
         binding.layoutSettings.setOnClickListener {
             addFragment(R.id.container, SettingsFragment(), addToBackStack = true)
-
         }
 
         binding.layoutExit.setOnClickListener {
@@ -178,7 +180,21 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_main) {
                         loadingDialog = null
                     }
                 }
-                is ResultEvent.Failure -> {data.message?.toast(requireContext())}
+                is ResultEvent.Failure -> {
+                    data.message?.toast(requireContext())
+                }
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        vm.bookmarkStateFlow.onEach { data ->
+            when (data) {
+                is ResultEvent.Success -> {
+                    if (data.data) "Saved".snackBar(bindingCategory.constraint)
+                }
+                is ResultEvent.Loading -> {}
+                is ResultEvent.Failure -> {
+                    data.message?.snackBar(bindingCategory.constraint)
+                }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

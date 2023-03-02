@@ -23,7 +23,8 @@
         android:maxLines="3"
         android:text="@string/dummy_text"
         android:textColor="@color/text_color_white"
-        android:textSize="16sp"
+        android:textSize="14sp"
+        android:textStyle="italic"
         android:typeface="serif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivNewsPhoto"
@@ -31,15 +32,20 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/font_falling_sky"
+        android:fontFamily="@font/falling_sky_condensed_outline_oblique"
         android:text="@string/name"
+        android:layout_marginEnd="16dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAlignment="textStart"
         android:textColor="@color/text_color_white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/ivNewsPhoto"
+        app:layout_constraintEnd_toStartOf="@id/tvDate"
         app:layout_constraintStart_toEndOf="@id/ivNewsPhoto" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -48,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/font_falling_sky"
+        android:fontFamily="@font/falling_sky_condensed_oblique"
         android:text="@string/date_month"
         android:textColor="@color/text_color_white"
         android:textSize="12sp"

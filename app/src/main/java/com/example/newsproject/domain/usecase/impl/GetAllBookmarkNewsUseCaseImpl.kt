@@ -8,7 +8,7 @@ import com.example.newsproject.di.qualifier.SearchNewsModuleMapper
 import com.example.newsproject.domain.usecase.IGetAllBookmarkNewsUseCase
 import com.example.newsproject.model.BookmarkNewsModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class GetAllBookmarkNewsUseCaseImpl @Inject constructor(
@@ -16,17 +16,18 @@ class GetAllBookmarkNewsUseCaseImpl @Inject constructor(
     @SearchNewsModuleMapper private val bookmarkNewsMapper: ISingleMapper<BookmarkNewsEntity, BookmarkNewsModel>,
 ) : IGetAllBookmarkNewsUseCase {
 
-    override suspend fun invoke(): ResultEvent<List<BookmarkNewsModel>> {
-        return try {
-            val response = withContext(Dispatchers.IO) { localRepo.getAllBookmarkNews() }
-            if (response.isNotEmpty()) {
-                val newsModel = response.map { bookmarkNewsMapper(it) }
-                ResultEvent.Success(newsModel)
-            } else ResultEvent.Failure("Data is empty")
-        } catch (t: Throwable) {
-            ResultEvent.Failure("Connection Error")
-        } finally {
-            ResultEvent.Loading(false)
-        }
+    private val _bookmarksSharedFlow = MutableSharedFlow<ResultEvent<List<BookmarkNewsModel>>>()
+    override val bookmarksSharedFlow: SharedFlow<ResultEvent<List<BookmarkNewsModel>>>
+        get() = _bookmarksSharedFlow.asSharedFlow()
+
+    override fun invoke(): Flow<Unit> {
+        return localRepo.getAllBookmarkNews().map { bookmarkEntities ->
+            bookmarkEntities.map {
+                bookmarkNewsMapper(it)
+            }
+        }.onEach {
+            _bookmarksSharedFlow.emit(ResultEvent.Success(it))
+        }.map {}.flowOn(Dispatchers.IO)
+
     }
 }

@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.newsproject.R
 import com.example.newsproject.databinding.FragmentSearchDetailNewsBinding
+import com.example.newsproject.datasource.utils.ResultEvent
 import com.example.newsproject.model.SearchNewsModel
 import com.example.newsproject.presentation.vm.SearchDetailNewsViewModel
 import com.example.newsproject.util.Constants
-import com.example.newsproject.util.fullScreen
-import com.example.newsproject.util.snackBar
+import com.example.newsproject.util.extension.fullScreen
+import com.example.newsproject.util.extension.snackBar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class SearchDetailNewsFragment : Fragment(R.layout.fragment_search_detail_news) {
@@ -31,6 +35,11 @@ class SearchDetailNewsFragment : Fragment(R.layout.fragment_search_detail_news) 
         fullScreen()
         initView()
         initClickView()
+        loadDataByViewModel()
+    }
+
+    override fun onPause() {
+        super.onPause() //clearFlags()
     }
 
     private fun initView() {
@@ -54,9 +63,24 @@ class SearchDetailNewsFragment : Fragment(R.layout.fragment_search_detail_news) 
 
         binding.ivBookMark.setOnClickListener {
             searchNewsModel?.let { searchNews -> vm.addBookmarkNews(searchNews) }
-            "Saved".snackBar(binding.constraintLayout)
         }
     }
+
+    private fun loadDataByViewModel() {
+        vm.bookmarkStateFlow.onEach { data ->
+            when (data) {
+                is ResultEvent.Success -> {
+                    if (data.data) "Saved".snackBar(binding.constraintLayout)
+                }
+                is ResultEvent.Loading -> {
+                }
+                is ResultEvent.Failure -> {
+                    data.message?.snackBar(binding.constraintLayout)
+                }
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

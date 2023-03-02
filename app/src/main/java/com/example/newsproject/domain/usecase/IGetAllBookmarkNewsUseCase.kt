@@ -2,7 +2,11 @@ package com.example.newsproject.domain.usecase
 
 import com.example.newsproject.datasource.utils.ResultEvent
 import com.example.newsproject.model.BookmarkNewsModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 
 interface IGetAllBookmarkNewsUseCase {
-    suspend operator fun invoke(): ResultEvent<List<BookmarkNewsModel>>
+    operator fun invoke(): Flow<Unit>
+    val bookmarksSharedFlow: SharedFlow<ResultEvent<List<BookmarkNewsModel>>>
+
 }

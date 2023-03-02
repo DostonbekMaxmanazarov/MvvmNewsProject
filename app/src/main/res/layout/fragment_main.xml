@@ -24,7 +24,7 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,6 +39,7 @@
                     android:id="@+id/circleImageUser"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
+                    android:layout_marginTop="16dp"
                     android:padding="2dp"
                     android:src="@drawable/person" />
 
@@ -53,7 +54,7 @@
                     android:textStyle="bold|italic"
                     android:typeface="serif" />
 
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/layoutBookmark"

@@ -6,15 +6,16 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#2F313A</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
 
     // background colors
-    <color name="background_color">#FF000000</color>
+    <color name="background_color">#2F313A</color>
 
     // editText's colors
     <color name="edit_text_background_color">#40424C</color>
+    <color name="edit_text_stroke_color">#D0D0D1</color>
     <color name="edit_text_hint_color">#777880</color>
 
     // text color
@@ -28,5 +29,12 @@
 
     // Text color
     <color name="text_color_white">#FFFFFFFF</color>
+
+    // image color
+    <color name="image_nav_color">#FFFFFF</color>
+    <color name="icon_search_color">#D0D0D1</color>
+    <color name="icon_bookmark_color">#FFFFFF</color>
+    <color name="icon_back_color">#FFFFFF</color>
+    <color name="icon_tint_color">#FFFFFF</color>
 
 </resources>

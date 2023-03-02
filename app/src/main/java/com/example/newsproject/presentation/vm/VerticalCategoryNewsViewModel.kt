@@ -24,6 +24,12 @@ class VerticalCategoryNewsViewModel @Inject constructor(
     val newsStateFlow: StateFlow<ResultEvent<List<CategoryNewsModel>>>
         get() = _newsStateFlow.asStateFlow()
 
+    private val _bookmarkStateFlow =
+        MutableStateFlow<ResultEvent<Boolean>>(ResultEvent.Success(false))
+
+    val bookmarkStateFlow: StateFlow<ResultEvent<Boolean>>
+        get() = _bookmarkStateFlow.asStateFlow()
+
     fun getTopStories(isLoadingLocal: Boolean = false, category: String = "") {
         viewModelScope.launch {
             _newsStateFlow.emit(ResultEvent.Loading(true))
@@ -35,8 +41,8 @@ class VerticalCategoryNewsViewModel @Inject constructor(
     }
 
     fun addBookmarkNews(categoryNewsItemModel: CategoryNewsModel) {
-        viewModelScope.launch {
-            categoryAddBookmarkUseCase(categoryNewsItemModel)
-        }
+            viewModelScope.launch {
+                _bookmarkStateFlow.emit(categoryAddBookmarkUseCase(categoryNewsItemModel))
+            }
     }
 }

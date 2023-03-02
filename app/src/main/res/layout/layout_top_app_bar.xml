@@ -5,7 +5,7 @@
     android:id="@+id/app_bar_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/Theme.NewsProject"
+    android:background="@color/background_color"
     android:paddingTop="16dp"
     android:visibility="visible"
     tools:context=".presentation.screen.MainActivity">
@@ -32,18 +32,17 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etSearch"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:textCursorDrawable="@drawable/bg_color_cursor"
-                android:background="@null"
+                android:background="@drawable/bg_edit_text"
                 android:hint="@string/search"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
+                android:paddingHorizontal="8dp"
                 android:textColor="@color/text_color_white"
                 android:textColorHint="@color/edit_text_hint_color"
+                android:textCursorDrawable="@drawable/bg_color_cursor"
                 android:textSize="16sp"
                 android:visibility="visible" />
 

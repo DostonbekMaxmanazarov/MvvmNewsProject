@@ -24,11 +24,13 @@ class VerticalSearchNewsViewModel @Inject constructor(
     val newsStateFlow: StateFlow<ResultEvent<List<SearchNewsModel>>>
         get() = _newsStateFlow.asStateFlow()
 
-    init {
-        getSearchNews()
-    }
+    private val _bookmarkStateFlow =
+        MutableStateFlow<ResultEvent<Boolean>>(ResultEvent.Success(false))
 
-    fun getSearchNews(searchText: String = "All") {
+    val bookmarkStateFlow: StateFlow<ResultEvent<Boolean>>
+        get() = _bookmarkStateFlow.asStateFlow()
+
+    fun getSearchNews(searchText: String) {
         viewModelScope.launch {
             _newsStateFlow.emit(ResultEvent.Loading(true))
             delay(300)
@@ -40,7 +42,7 @@ class VerticalSearchNewsViewModel @Inject constructor(
 
     fun addBookmarkNews(searchNewsItemModel: SearchNewsModel) {
         viewModelScope.launch {
-            searchAddBookmarkUseCase(searchNewsItemModel)
+            _bookmarkStateFlow.emit(searchAddBookmarkUseCase(searchNewsItemModel))
         }
     }
 }

@@ -13,6 +13,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
+            android:background="@color/background_color"
             android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -43,19 +44,22 @@
                         android:text="@string/headline"
                         android:textColor="@color/text_color_white"
                         android:textSize="24sp"
+                        android:textStyle="italic|bold"
                         android:typeface="serif" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etSearch"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="42dp"
                         android:layout_marginTop="16dp"
-                        android:background="@color/edit_text_background_color"
+                        android:background="@drawable/bg_edit_text"
                         android:drawableEnd="@drawable/ic_search"
                         android:focusable="false"
                         android:hint="@string/search_topics_or_sources"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
+                        android:textStyle="italic"
+                        android:typeface="serif"
                         android:textColor="@color/white"
                         android:textColorHint="@color/edit_text_hint_color"
                         android:textSize="14sp" />
@@ -68,7 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
+                android:paddingEnd="16dp"
+                android:visibility="gone"
+                tools:listitem="@layout/item_tab_category" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -99,22 +105,26 @@
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:typeface="serif"
+                    android:textStyle="italic"
                     android:text="@string/dummy_text"
                     android:textColor="@color/text_color_white"
-                    android:textSize="18sp"
-                    android:typeface="serif"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ivNewsPhoto" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:fontFamily="@font/font_falling_sky"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/falling_sky_condensed_outline_oblique"
                     android:text="@string/name"
+                    android:textAlignment="textStart"
                     android:textColor="@color/text_color_white"
                     android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@id/tvDate"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
@@ -124,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/font_falling_sky"
+                    android:fontFamily="@font/falling_sky_condensed_oblique"
                     android:text="@string/date"
                     android:textColor="@color/text_color_white"
                     android:textSize="12sp"
@@ -165,6 +175,6 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/text_color_white" />
+        app:tint="@color/icon_tint_color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
