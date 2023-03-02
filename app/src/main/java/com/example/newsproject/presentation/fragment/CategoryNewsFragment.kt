@@ -186,7 +186,7 @@ class CategoryNewsFragment : Fragment(R.layout.fragment_main) {
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        vm.bookmarkStateFlow.onEach { data ->
+        vm.bookmarkSharedFlow.onEach { data ->
             when (data) {
                 is ResultEvent.Success -> {
                     if (data.data) "Saved".snackBar(bindingCategory.constraint)

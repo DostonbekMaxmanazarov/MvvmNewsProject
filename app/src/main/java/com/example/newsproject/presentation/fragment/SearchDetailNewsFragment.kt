@@ -32,14 +32,9 @@ class SearchDetailNewsFragment : Fragment(R.layout.fragment_search_detail_news) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentSearchDetailNewsBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        fullScreen()
         initView()
         initClickView()
         loadDataByViewModel()
-    }
-
-    override fun onPause() {
-        super.onPause() //clearFlags()
     }
 
     private fun initView() {
@@ -67,7 +62,7 @@ class SearchDetailNewsFragment : Fragment(R.layout.fragment_search_detail_news) 
     }
 
     private fun loadDataByViewModel() {
-        vm.bookmarkStateFlow.onEach { data ->
+        vm.bookmarkSharedFlow.onEach { data ->
             when (data) {
                 is ResultEvent.Success -> {
                     if (data.data) "Saved".snackBar(binding.constraintLayout)

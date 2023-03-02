@@ -6,9 +6,7 @@ import com.example.newsproject.datasource.utils.ResultEvent
 import com.example.newsproject.domain.usecase.ICategoryAddBookmarkUseCase
 import com.example.newsproject.model.CategoryNewsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,15 +15,15 @@ class CategoryDetailNewsViewModel @Inject constructor(
     private val categoryAddBookmarkUseCase: ICategoryAddBookmarkUseCase
 ) : ViewModel() {
 
-    private val _bookmarkStateFlow =
-        MutableStateFlow<ResultEvent<Boolean>>(ResultEvent.Success(false))
+    private val _bookmarkSharedFlow =
+        MutableSharedFlow<ResultEvent<Boolean>>()
 
-    val bookmarkStateFlow: StateFlow<ResultEvent<Boolean>>
-        get() = _bookmarkStateFlow.asStateFlow()
+    val bookmarkSharedFlow: SharedFlow<ResultEvent<Boolean>>
+        get() = _bookmarkSharedFlow.asSharedFlow()
 
     fun addBookmarkNews(categoryNewsItemModel: CategoryNewsModel) {
         viewModelScope.launch {
-            _bookmarkStateFlow.emit(categoryAddBookmarkUseCase(categoryNewsItemModel))
+            _bookmarkSharedFlow.emit(categoryAddBookmarkUseCase(categoryNewsItemModel))
         }
     }
 }

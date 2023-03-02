@@ -39,14 +39,9 @@ class VerticalCategoryNewsFragment : Fragment(R.layout.fragment_vertical_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentVerticalNewsBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        fullScreen()
         initView()
         loadDataByViewModel()
         initClickView()
-    }
-
-    override fun onPause() {
-        super.onPause() //clearFlags()
     }
 
     private fun initView() {
@@ -94,7 +89,7 @@ class VerticalCategoryNewsFragment : Fragment(R.layout.fragment_vertical_news) {
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        vm.bookmarkStateFlow.onEach { data ->
+        vm.bookmarkSharedFlow.onEach { data ->
             when (data) {
                 is ResultEvent.Success -> {
                     if (data.data) "Saved".snackBar(binding.constraintLayout)

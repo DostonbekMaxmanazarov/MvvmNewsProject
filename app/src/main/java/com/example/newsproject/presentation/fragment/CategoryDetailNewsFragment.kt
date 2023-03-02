@@ -32,14 +32,9 @@ class CategoryDetailNewsFragment : Fragment(R.layout.fragment_category_detail_ne
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentCategoryDetailNewsBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        fullScreen()
         initView()
         initClickView()
         loadDataByViewModel()
-    }
-
-    override fun onPause() {
-        super.onPause() //clearFlags()
     }
 
     private fun initView() {
@@ -69,7 +64,7 @@ class CategoryDetailNewsFragment : Fragment(R.layout.fragment_category_detail_ne
     }
 
     private fun loadDataByViewModel() {
-        vm.bookmarkStateFlow.onEach { data ->
+        vm.bookmarkSharedFlow.onEach { data ->
             when (data) {
                 is ResultEvent.Success -> {
                     if (data.data) "Saved".snackBar(binding.constraintLayout)

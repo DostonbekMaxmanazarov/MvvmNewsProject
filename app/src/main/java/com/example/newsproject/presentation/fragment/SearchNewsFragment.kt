@@ -127,7 +127,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        vm.bookmarkStateFlow.onEach { data ->
+        vm.bookmarkSharedFlow.onEach { data ->
             when (data) {
                 is ResultEvent.Success -> {
                     if (data.data) "Saved".snackBar(binding.constraintLayout)

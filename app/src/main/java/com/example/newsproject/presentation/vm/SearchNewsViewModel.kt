@@ -23,11 +23,11 @@ class SearchNewsViewModel @Inject constructor(
     val newsStateFlow: StateFlow<ResultEvent<List<SearchNewsModel>>>
         get() = _newsStateFlow.asStateFlow()
 
-    private val _bookmarkStateFlow =
-        MutableStateFlow<ResultEvent<Boolean>>(ResultEvent.Success(false))
+    private val _bookmarkSharedFlow =
+        MutableSharedFlow<ResultEvent<Boolean>>()
 
-    val bookmarkStateFlow: StateFlow<ResultEvent<Boolean>>
-        get() = _bookmarkStateFlow.asStateFlow()
+    val bookmarkSharedFlow: SharedFlow<ResultEvent<Boolean>>
+        get() = _bookmarkSharedFlow.asSharedFlow()
 
 
     fun getTopStories(searchText: String = "All") {
@@ -42,7 +42,7 @@ class SearchNewsViewModel @Inject constructor(
 
     fun addBookmarkNews(searchNewsItemModel: SearchNewsModel) {
         viewModelScope.launch {
-            _bookmarkStateFlow.emit(searchAddBookmarkUseCase(searchNewsItemModel))
+            _bookmarkSharedFlow.emit(searchAddBookmarkUseCase(searchNewsItemModel))
         }
     }
 }

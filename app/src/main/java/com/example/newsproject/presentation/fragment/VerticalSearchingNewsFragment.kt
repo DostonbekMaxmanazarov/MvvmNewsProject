@@ -39,15 +39,9 @@ class VerticalSearchingNewsFragment : Fragment(R.layout.fragment_vertical_search
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentVerticalSearchingNewsBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        fullScreen()
         initView()
         loadDataByViewModel()
         initClickView()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //clearFlags()
     }
 
     private fun initView() {
@@ -92,7 +86,7 @@ class VerticalSearchingNewsFragment : Fragment(R.layout.fragment_vertical_search
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        vm.bookmarkStateFlow.onEach { data ->
+        vm.bookmarkSharedFlow.onEach { data ->
             when (data) {
                 is ResultEvent.Success -> {
                     if (data.data) "Saved".snackBar(binding.constraintLayout)
