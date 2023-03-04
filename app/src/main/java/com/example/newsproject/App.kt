@@ -11,6 +11,7 @@ class App : Application() {
     companion object {
         @JvmStatic
         lateinit var mApp: App
+        //
     }
 
     @Inject
